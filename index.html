@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoCalc - Professional Crypto Price Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .secret-area {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            opacity: 0;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+
+        .calculator-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            backdrop-filter: blur(10px);
+        }
+
+        .calculator-title {
+            text-align: center;
+            color: #333;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            font-weight: 300;
+        }
+
+        .converter-section {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            align-items: center;
+        }
+
+        .currency-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .currency-select {
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .currency-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .amount-input {
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .amount-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .swap-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+        }
+
+        .swap-button:hover {
+            background: #5a67d8;
+            transform: rotate(180deg);
+        }
+
+        .rate-info {
+            text-align: center;
+            color: #666;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: #667eea;
+            margin: 1rem 0;
+        }
+
+        .error {
+            display: none;
+            color: #e53e3e;
+            text-align: center;
+            margin: 1rem 0;
+            padding: 0.5rem;
+            background: #fed7d7;
+            border-radius: 5px;
+        }
+
+        .footer {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+
+        .last-updated {
+            text-align: center;
+            color: #666;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .converter-section {
+                flex-direction: column;
+            }
+            
+            .swap-button {
+                transform: rotate(90deg);
+            }
+            
+            .swap-button:hover {
+                transform: rotate(270deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">CryptoCalc</a>
+                <div class="secret-area" id="secretArea"></div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="calculator-card">
+                <h1 class="calculator-title">Crypto Price Calculator</h1>
+                
+                <div class="converter-section">
+                    <div class="currency-group">
+                        <select class="currency-select" id="fromCurrency">
+                            <option value="BTC">Bitcoin (BTC)</option>
+                            <option value="ETH">Ethereum (ETH)</option>
+                            <option value="SOL">Solana (SOL)</option>
+                            <option value="BNB">BNB Smart Chain (BNB)</option>
+                            <option value="TRX">TRON (TRX)</option>
+                            <option value="USDC">USD Coin (USDC)</option>
+                            <option value="USDT">Tether (USDT)</option>
+                            <option value="USD">US Dollar (USD)</option>
+                            <option value="EUR">Euro (EUR)</option>
+                            <option value="HUF">Hungarian Forint (HUF)</option>
+                        </select>
+                        <input type="number" class="amount-input" id="fromAmount" placeholder="0.00" step="any">
+                    </div>
+                    
+                    <button class="swap-button" id="swapButton">⇄</button>
+                    
+                    <div class="currency-group">
+                        <select class="currency-select" id="toCurrency">
+                            <option value="USD">US Dollar (USD)</option>
+                            <option value="EUR">Euro (EUR)</option>
+                            <option value="HUF">Hungarian Forint (HUF)</option>
+                            <option value="BTC">Bitcoin (BTC)</option>
+                            <option value="ETH">Ethereum (ETH)</option>
+                            <option value="SOL">Solana (SOL)</option>
+                            <option value="BNB">BNB Smart Chain (BNB)</option>
+                            <option value="TRX">TRON (TRX)</option>
+                            <option value="USDC">USD Coin (USDC)</option>
+                            <option value="USDT">Tether (USDT)</option>
+                        </select>
+                        <input type="number" class="amount-input" id="toAmount" placeholder="0.00" step="any" readonly>
+                    </div>
+                </div>
+
+                <div class="loading" id="loading">Calculating...</div>
+                <div class="error" id="error"></div>
+                <div class="rate-info" id="rateInfo"></div>
+                <div class="last-updated" id="lastUpdated"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <a href="#" class="footer-link">About</a>
+                <a href="#" class="footer-link">Contact</a>
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        class CryptoCalculator {
+            constructor() {
+                this.rates = {};
+                this.lastUpdate = null;
+                this.debounceTimer = null;
+                this.secretClicks = 0;
+                this.secretTimer = null;
+                
+                this.initElements();
+                this.initEventListeners();
+                this.loadRates();
+            }
+
+            initElements() {
+                this.fromCurrency = document.getElementById('fromCurrency');
+                this.toCurrency = document.getElementById('toCurrency');
+                this.fromAmount = document.getElementById('fromAmount');
+                this.toAmount = document.getElementById('toAmount');
+                this.swapButton = document.getElementById('swapButton');
+                this.loading = document.getElementById('loading');
+                this.error = document.getElementById('error');
+                this.rateInfo = document.getElementById('rateInfo');
+                this.lastUpdated = document.getElementById('lastUpdated');
+                this.secretArea = document.getElementById('secretArea');
+            }
+
+            initEventListeners() {
+                this.fromAmount.addEventListener('input', () => this.debounceCalculate());
+                this.fromCurrency.addEventListener('change', () => this.calculate());
+                this.toCurrency.addEventListener('change', () => this.calculate());
+                this.swapButton.addEventListener('click', () => this.swapCurrencies());
+                
+                // Secret area clicks
+                this.secretArea.addEventListener('click', () => this.handleSecretClick());
+            }
+
+            handleSecretClick() {
+                this.secretClicks++;
+                
+                if (this.secretClicks === 1) {
+                    this.secretTimer = setTimeout(() => {
+                        this.secretClicks = 0;
+                    }, 3000);
+                }
+                
+                if (this.secretClicks === 5) {
+                    clearTimeout(this.secretTimer);
+                    this.secretClicks = 0;
+                    alert('Secret area activated! (Login functionality will be added later)');
+                }
+            }
+
+            debounceCalculate() {
+                clearTimeout(this.debounceTimer);
+                this.debounceTimer = setTimeout(() => this.calculate(), 300);
+            }
+
+            async loadRates() {
+                this.showLoading(true);
+                try {
+                    // Using CoinGecko API for crypto prices
+                    const cryptoResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,binancecoin,tron,usd-coin,tether&vs_currencies=usd,eur,huf');
+                    const cryptoData = await cryptoResponse.json();
+                    
+                    // Process crypto data
+                    this.rates = {
+                        'BTC': {
+                            'USD': cryptoData.bitcoin.usd,
+                            'EUR': cryptoData.bitcoin.eur,
+                            'HUF': cryptoData.bitcoin.huf
+                        },
+                        'ETH': {
+                            'USD': cryptoData.ethereum.usd,
+                            'EUR': cryptoData.ethereum.eur,
+                            'HUF': cryptoData.ethereum.huf
+                        },
+                        'SOL': {
+                            'USD': cryptoData.solana.usd,
+                            'EUR': cryptoData.solana.eur,
+                            'HUF': cryptoData.solana.huf
+                        },
+                        'BNB': {
+                            'USD': cryptoData.binancecoin.usd,
+                            'EUR': cryptoData.binancecoin.eur,
+                            'HUF': cryptoData.binancecoin.huf
+                        },
+                        'TRX': {
+                            'USD': cryptoData.tron.usd,
+                            'EUR': cryptoData.tron.eur,
+                            'HUF': cryptoData.tron.huf
+                        },
+                        'USDC': {
+                            'USD': cryptoData['usd-coin'].usd,
+                            'EUR': cryptoData['usd-coin'].eur,
+                            'HUF': cryptoData['usd-coin'].huf
+                        },
+                        'USDT': {
+                            'USD': cryptoData.tether.usd,
+                            'EUR': cryptoData.tether.eur,
+                            'HUF': cryptoData.tether.huf
+                        }
+                    };
+
+                    // Add fiat cross-rates
+                    const fiatResponse = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+                    const fiatData = await fiatResponse.json();
+                    
+                    this.rates['USD'] = {
+                        'EUR': 1 / fiatData.rates.EUR,
+                        'HUF': 1 / fiatData.rates.HUF,
+                        'USD': 1
+                    };
+                    
+                    this.rates['EUR'] = {
+                        'USD': fiatData.rates.EUR,
+                        'HUF': fiatData.rates.EUR / fiatData.rates.HUF,
+                        'EUR': 1
+                    };
+                    
+                    this.rates['HUF'] = {
+                        'USD': fiatData.rates.HUF,
+                        'EUR': fiatData.rates.HUF / fiatData.rates.EUR,
+                        'HUF': 1
+                    };
+
+                    this.lastUpdate = new Date();
+                    this.updateLastUpdatedDisplay();
+                    this.calculate();
+                    
+                } catch (error) {
+                    this.showError('Failed to load exchange rates. Please try again later.');
+                    console.error('Error loading rates:', error);
+                } finally {
+                    this.showLoading(false);
+                }
+            }
+
+            calculate() {
+                const fromCur = this.fromCurrency.value;
+                const toCur = this.toCurrency.value;
+                const amount = parseFloat(this.fromAmount.value) || 0;
+
+                if (amount === 0) {
+                    this.toAmount.value = '';
+                    this.rateInfo.textContent = '';
+                    return;
+                }
+
+                try {
+                    const rate = this.getExchangeRate(fromCur, toCur);
+                    const result = amount * rate;
+                    
+                    this.toAmount.value = this.formatNumber(result, toCur);
+                    this.rateInfo.textContent = `1 ${fromCur} = ${this.formatNumber(rate, toCur)} ${toCur}`;
+                    this.hideError();
+                    
+                } catch (error) {
+                    this.showError('Exchange rate not available');
+                    console.error('Calculation error:', error);
+                }
+            }
+
+            getExchangeRate(fromCurrency, toCurrency) {
+                if (fromCurrency === toCurrency) return 1;
+                
+                // Direct rate
+                if (this.rates[fromCurrency] && this.rates[fromCurrency][toCurrency]) {
+                    return this.rates[fromCurrency][toCurrency];
+                }
+                
+                // Cross rate through USD
+                if (this.rates[fromCurrency] && this.rates[fromCurrency]['USD'] && 
+                    this.rates[toCurrency] && this.rates[toCurrency]['USD']) {
+                    return this.rates[fromCurrency]['USD'] / this.rates[toCurrency]['USD'];
+                }
+                
+                // Inverse rate
+                if (this.rates[toCurrency] && this.rates[toCurrency][fromCurrency]) {
+                    return 1 / this.rates[toCurrency][fromCurrency];
+                }
+                
+                throw new Error('Exchange rate not found');
+            }
+
+            formatNumber(num, currency) {
+                const isCrypto = ['BTC', 'ETH', 'SOL', 'BNB', 'TRX'].includes(currency);
+                const isFiat = ['USD', 'EUR', 'HUF'].includes(currency);
+                
+                if (isCrypto) {
+                    return num < 0.0001 ? num.toExponential(4) : num.toFixed(8);
+                } else if (currency === 'HUF') {
+                    return num.toFixed(0);
+                } else {
+                    return num.toFixed(2);
+                }
+            }
+
+            swapCurrencies() {
+                const fromCur = this.fromCurrency.value;
+                const toCur = this.toCurrency.value;
+                const fromAmt = this.fromAmount.value;
+                const toAmt = this.toAmount.value;
+                
+                this.fromCurrency.value = toCur;
+                this.toCurrency.value = fromCur;
+                this.fromAmount.value = toAmt;
+                
+                this.calculate();
+            }
+
+            showLoading(show) {
+                this.loading.style.display = show ? 'block' : 'none';
+            }
+
+            showError(message) {
+                this.error.textContent = message;
+                this.error.style.display = 'block';
+            }
+
+            hideError() {
+                this.error.style.display = 'none';
+            }
+
+            updateLastUpdatedDisplay() {
+                if (this.lastUpdate) {
+                    this.lastUpdated.textContent = `Last updated: ${this.lastUpdate.toLocaleString()}`;
+                }
+            }
+        }
+
+        // Initialize calculator when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new CryptoCalculator();
+        });
+
+        // Refresh rates every 30 seconds
+        setInterval(() => {
+            if (window.calculator) {
+                window.calculator.loadRates();
+            }
+        }, 30000);
+    </script>
+</body>
+</html>
