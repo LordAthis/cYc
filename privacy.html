@@ -178,3 +178,89 @@
                     <h2>10. Változások</h2>
                     <p>Fenntartjuk a jogot, hogy ezt az Adatvédelmi Szabályzatot bármikor módosítsuk. A változásokat ezen az oldalon tesszük közzé.</p>
                 </div>
+.last-updated {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .footer {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .content-card {
+                margin: 1rem;
+                padding: 2rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">cYc</a>
+                <div class="nav-links">
+                    <a href="/" class="nav-link">Kalkulátor</a>
+                    <a href="/about.html" class="nav-link">Rólunk</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="content-card">
+                <!-- MAJD IDE JÖHET A TARTALMI RÉSZ -->
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <a href="/about.html" class="footer-link">Rólunk</a>
+                <a href="/contact.html" class="footer-link">Kapcsolat</a>
+                <a href="/privacy.html" class="footer-link">Adatvédelem</a>
+                <a href="/terms.html" class="footer-link">Felhasználási feltételek</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
