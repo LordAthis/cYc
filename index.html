@@ -537,14 +537,29 @@
             formatNumber(num, currency) {
                 const isCrypto = ['BTC', 'ETH', 'SOL', 'BNB', 'TRX'].includes(currency);
                 const isFiat = ['USD', 'EUR', 'HUF'].includes(currency);
-                
+    
+                let formattedNum;
                 if (isCrypto) {
-                    return num < 0.0001 ? num.toExponential(4) : num.toFixed(8);
+                    formattedNum = num < 0.0001 ? num.toExponential(4) : num.toFixed(8);
                 } else if (currency === 'HUF') {
-                    return num.toFixed(0);
+                    formattedNum = num.toFixed(0);
                 } else {
-                    return num.toFixed(2);
-                }
+                    formattedNum = num.toFixed(2);
+            }
+    
+            // Ezres elválasztók hozzáadása apostrofokkal
+            return this.addThousandSeparators(formattedNum);
+        }
+
+            addThousandSeparators(numStr) {
+                const parts = numStr.split('.');
+                const integerPart = parts[0];
+                const decimalPart = parts[1];
+    
+                // Ezres elválasztók hozzáadása apostrofokkal (jobbról balra)
+                const withSeparators = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, "'");
+    
+                return decimalPart ? `${withSeparators},${decimalPart}` : withSeparators;
             }
 
             swapCurrencies() {
