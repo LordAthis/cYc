@@ -226,31 +226,6 @@
                 font-size: 1.5rem;
             }
 
-            .login-btn {
-                background: rgba(255, 255, 255, 0.1);
-                border: 2px solid rgba(255, 255, 255, 0.3);
-                color: rgba(255, 255, 255, 0.9);
-                padding: 0.5rem 1rem;
-                border-radius: 8px;
-                font-weight: 500;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-                transition: all 0.3s ease;
-                font-size: 0.9rem;
-            }
-
-            .login-btn:hover {
-                background: rgba(255, 255, 255, 0.15);
-                border-color: rgba(255, 255, 255, 0.4);
-                color: white;
-            }
-
-            .login-icon {
-                font-size: 1rem;
-            }
-            
             .amount-input {
                 font-size: 1.1rem;
                 padding: 0.9rem;
@@ -291,24 +266,22 @@
     </style>
 </head>
 <body>
-<header class="header">
-    <div class="container">
-        <div class="header-content">
-            <a href="/" class="logo">cYc - CryptoCalc</a>
-            <div class="nav-links">
-                <button class="login-btn" id="loginBtn" title="Bejelentkezés (hamarosan)">
-                    <span class="login-icon">👤</span>
-                    Belépés
-                </button>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">CryptoCalc</a>
+                <div class="nav-links">
+                    <a href="#" class="nav-link">Live Rates</a>
+                    <a href="#" class="nav-link">Calculator</a>
+                </div>
             </div>
         </div>
-    </div>
-</header>
+    </header>
 
     <main class="main-content">
         <div class="container">
             <div class="calculator-card">
-                <h1 class="calculator-title">Árfolyam számítás</h1>
+                <h1 class="calculator-title">Crypto Price Calculator</h1>
                 
                 <div class="converter-section">
                     <div class="currency-group">
@@ -322,7 +295,7 @@
                             <option value="USDT">Tether (USDT)</option>
                             <option value="USD">US Dollar (USD)</option>
                             <option value="EUR">Euro (EUR)</option>
-                            <option value="HUF">Magyat Forint (HUF)</option>
+                            <option value="HUF">Hungarian Forint (HUF)</option>
                         </select>
                         <input type="number" class="amount-input" id="fromAmount" placeholder="0.00" step="any">
                     </div>
@@ -333,7 +306,7 @@
                         <select class="currency-select" id="toCurrency">
                             <option value="USD">US Dollar (USD)</option>
                             <option value="EUR">Euro (EUR)</option>
-                            <option value="HUF">Magyar Forint (HUF)</option>
+                            <option value="HUF">Hungarian Forint (HUF)</option>
                             <option value="BTC">Bitcoin (BTC)</option>
                             <option value="ETH">Ethereum (ETH)</option>
                             <option value="SOL">Solana (SOL)</option>
@@ -346,7 +319,7 @@
                     </div>
                 </div>
 
-                <div class="loading" id="loading">Számolás...</div>
+                <div class="loading" id="loading">Calculating...</div>
                 <div class="error" id="error"></div>
                 <div class="rate-info" id="rateInfo"></div>
                 <div class="last-updated" id="lastUpdated"></div>
@@ -357,10 +330,10 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <a href="/about.html" class="footer-link">Rólunk</a>
-                <a href="/contact.html" class="footer-link">Kapcsolat</a>
-                <a href="/privacy.html" class="footer-link">Adatvédelem</a>
-                <a href="/terms.html" class="footer-link">Felhasználási feltételek</a>
+                <a href="about.html" class="footer-link">Rólunk</a>
+                <a href="contact.html" class="footer-link">Kapcsolat</a>
+                <a href="privacy.html" class="footer-link">Adatvédelem</a>
+                <a href="terms.html" class="footer-link">Felhasználási feltételek</a>
             </div>
         </div>
     </footer>
@@ -376,7 +349,7 @@
                 this.initEventListeners();
                 this.loadRates();
             }
-            
+
             initElements() {
                 this.fromCurrency = document.getElementById('fromCurrency');
                 this.toCurrency = document.getElementById('toCurrency');
@@ -394,12 +367,36 @@
                 this.fromCurrency.addEventListener('change', () => this.calculate());
                 this.toCurrency.addEventListener('change', () => this.calculate());
                 this.swapButton.addEventListener('click', () => this.swapCurrencies());
-
-                    
+                
                 // Login button click handler
                 document.getElementById('loginBtn').addEventListener('click', () => {
                     alert('Bejelentkezés funkció hamarosan elérhető!');
                 });
+
+                // Format input on blur (amikor elhagyja a mezőt)
+                this.fromAmount.addEventListener('blur', () => this.formatInputField());
+                
+                // Raw input processing (eltávolítja a formázást számítás előtt)
+                this.fromAmount.addEventListener('focus', () => this.cleanInputField());
+            }
+
+            formatInputField() {
+                const value = this.parseInputValue(this.fromAmount.value);
+                if (value && !isNaN(value)) {
+                    const currency = this.fromCurrency.value;
+                    this.fromAmount.value = this.formatNumber(value, currency);
+                }
+            }
+
+            cleanInputField() {
+                // Távolítsa el az ezres elválasztókat és váltsa át a vesszőt pontra számítás céljából
+                this.fromAmount.value = this.parseInputValue(this.fromAmount.value);
+            }
+
+            parseInputValue(value) {
+                if (!value) return '';
+                // Távolítsa el az apostrofokat és váltsa át a vesszőt pontra
+                return value.replace(/'/g, '').replace(/,/g, '.');
             }
 
             debounceCalculate() {
@@ -490,7 +487,7 @@
             calculate() {
                 const fromCur = this.fromCurrency.value;
                 const toCur = this.toCurrency.value;
-                const amount = parseFloat(this.fromAmount.value) || 0;
+                const amount = parseFloat(this.parseInputValue(this.fromAmount.value)) || 0;
 
                 if (amount === 0) {
                     this.toAmount.value = '';
@@ -538,20 +535,35 @@
                 const isCrypto = ['BTC', 'ETH', 'SOL', 'BNB', 'TRX'].includes(currency);
                 const isFiat = ['USD', 'EUR', 'HUF'].includes(currency);
                 
+                let formattedNum;
                 if (isCrypto) {
-                    return num < 0.0001 ? num.toExponential(4) : num.toFixed(8);
+                    formattedNum = num < 0.0001 ? num.toExponential(4) : num.toFixed(8);
                 } else if (currency === 'HUF') {
-                    return num.toFixed(0);
+                    formattedNum = num.toFixed(0);
                 } else {
-                    return num.toFixed(2);
+                    formattedNum = num.toFixed(2);
                 }
+                
+                // Ezres elválasztók hozzáadása apostrofokkal
+                return this.addThousandSeparators(formattedNum);
+            }
+
+            addThousandSeparators(numStr) {
+                const parts = numStr.split('.');
+                const integerPart = parts[0];
+                const decimalPart = parts[1];
+                
+                // Ezres elválasztók hozzáadása apostrofokkal (jobbról balra)
+                const withSeparators = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, "'");
+                
+                return decimalPart ? `${withSeparators},${decimalPart}` : withSeparators;
             }
 
             swapCurrencies() {
                 const fromCur = this.fromCurrency.value;
                 const toCur = this.toCurrency.value;
-                const fromAmt = this.fromAmount.value;
-                const toAmt = this.toAmount.value;
+                const fromAmt = this.parseInputValue(this.fromAmount.value);
+                const toAmt = this.parseInputValue(this.toAmount.value);
                 
                 this.fromCurrency.value = toCur;
                 this.toCurrency.value = fromCur;
@@ -594,3 +606,4 @@
     </script>
 </body>
 </html>
+
