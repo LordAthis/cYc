@@ -493,7 +493,7 @@
                 const amount = parseFloat(this.fromAmount.value) || 0;
 
                 if (amount === 0) {
-                    this.toAmount.value = '';
+                    this.toAmount.value = this.formatNumber(result, toCur).replace(/'/g, '').replace(/,/g, '.');
                     this.rateInfo.textContent = '';
                     return;
                 }
