@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cYc - Professional Crypto Price Calculator</title>
+    <title>cYc - Professzionális kriptoár kalkulátor</title>
     <style>
         * {
             margin: 0;
@@ -45,12 +45,7 @@
             text-decoration: none;
         }
 
-        .secret-area {
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            opacity: 0;
-        }
+
 
         .main-content {
             flex: 1;
@@ -201,14 +196,71 @@
         @media (max-width: 768px) {
             .converter-section {
                 flex-direction: column;
+                gap: 1.5rem;
             }
             
             .swap-button {
                 transform: rotate(90deg);
+                margin: 0;
             }
             
             .swap-button:hover {
                 transform: rotate(270deg);
+            }
+
+            .calculator-card {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            .calculator-title {
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .amount-input {
+                font-size: 1.1rem;
+                padding: 0.9rem;
+            }
+
+            .currency-select {
+                padding: 0.7rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 10px;
+            }
+
+            .calculator-card {
+                margin: 0.5rem;
+                padding: 1rem;
+            }
+
+            .calculator-title {
+                font-size: 1.3rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .swap-button {
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
             }
         }
     </style>
@@ -218,7 +270,10 @@
         <div class="container">
             <div class="header-content">
                 <a href="#" class="logo">cYc - CryptoCalc</a>
-                <div class="secret-area" id="secretArea"></div>
+                <div class="nav-links">
+                    <a href="#" class="nav-link">Élő árfolyamok</a>
+                    <a href="#" class="nav-link">Kalkulátor</a>
+                </div>
             </div>
         </div>
     </header>
@@ -226,7 +281,7 @@
     <main class="main-content">
         <div class="container">
             <div class="calculator-card">
-                <h1 class="calculator-title">Crypto Price Calculator</h1>
+                <h1 class="calculator-title">Árfolyam számítás</h1>
                 
                 <div class="converter-section">
                     <div class="currency-group">
@@ -240,7 +295,7 @@
                             <option value="USDT">Tether (USDT)</option>
                             <option value="USD">US Dollar (USD)</option>
                             <option value="EUR">Euro (EUR)</option>
-                            <option value="HUF">Magyar Forint (HUF)</option>
+                            <option value="HUF">Magyat Forint (HUF)</option>
                         </select>
                         <input type="number" class="amount-input" id="fromAmount" placeholder="0.00" step="any">
                     </div>
@@ -277,8 +332,8 @@
             <div class="footer-content">
                 <a href="#" class="footer-link">Rólunk</a>
                 <a href="#" class="footer-link">Kapcsolat</a>
-                <a href="#" class="footer-link">Privacy Policy</a>
-                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Adatvédelmi irányelvek</a>
+                <a href="#" class="footer-link">Szolgáltatási feltételek</a>
             </div>
         </div>
     </footer>
@@ -289,8 +344,6 @@
                 this.rates = {};
                 this.lastUpdate = null;
                 this.debounceTimer = null;
-                this.secretClicks = 0;
-                this.secretTimer = null;
                 
                 this.initElements();
                 this.initEventListeners();
@@ -307,7 +360,6 @@
                 this.error = document.getElementById('error');
                 this.rateInfo = document.getElementById('rateInfo');
                 this.lastUpdated = document.getElementById('lastUpdated');
-                this.secretArea = document.getElementById('secretArea');
             }
 
             initEventListeners() {
@@ -315,25 +367,6 @@
                 this.fromCurrency.addEventListener('change', () => this.calculate());
                 this.toCurrency.addEventListener('change', () => this.calculate());
                 this.swapButton.addEventListener('click', () => this.swapCurrencies());
-                
-                // Secret area clicks
-                this.secretArea.addEventListener('click', () => this.handleSecretClick());
-            }
-
-            handleSecretClick() {
-                this.secretClicks++;
-                
-                if (this.secretClicks === 1) {
-                    this.secretTimer = setTimeout(() => {
-                        this.secretClicks = 0;
-                    }, 3000);
-                }
-                
-                if (this.secretClicks === 5) {
-                    clearTimeout(this.secretTimer);
-                    this.secretClicks = 0;
-                    alert('Secret area activated! (Login functionality will be added later)');
-                }
             }
 
             debounceCalculate() {
