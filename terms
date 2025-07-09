@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Felhasználási feltételek - CryptoCalc</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 3rem 0;
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            color: #333;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            font-weight: 300;
+            text-align: center;
+        }
+
+        .content {
+            color: #555;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .content h2 {
+            color: #333;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .content p {
+            margin-bottom: 1.2rem;
+        }
+
+        .content ul {
+            margin-bottom: 1.2rem;
+            padding-left: 2rem;
+        }
+
+        .content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .last-updated {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .footer {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .content-card {
+                margin: 1rem;
+                padding: 2rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">CryptoCalc</a>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Kalkulátor</a>
+                    <a href="about.html" class="nav-link">Rólunk</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="content-card">
+                <h1 class="page-title">Felhasználási feltételek</h1>
+                
+                <div class="content">
+                    <div class="last-updated">
+                        <strong>Utolsó frissítés:</strong> 2025. július 9.
+                    </div>
+
+                    <p>Üdvözöljük a CryptoCalc weboldalán! Ezen feltételek szabályozzák a szolgáltatásunk használatát. A weboldal használatával Ön elfogadja ezeket a feltételeket.</p>
+
+                    <h2>1. Szolgáltatás leírása</h2>
+                    <p>A CryptoCalc egy ingyenes kriptovaluta árfolyam-kalkulátor szolgáltatás, amely valós idejű árfolyam-információkat és átváltási funkciókat biztosít. A szolgáltatás kizárólag tájékoztató jellegű.</p>
+
+                    <h2>2. Felhasználási jogok</h2>
+                    <p>Ön jogosult:</p>
+                    <ul>
+                        <li>A szolgáltatás személyes, nem kereskedelmi célú használatára</li>
+                        <li>Az árfolyam-kalkulátor funkcióinak használatára</li>
+                        <li>Az információk személyes döntéshozatalához történő felhasználására</li>
+                    </ul>
+
+                    <h2>3. Korlátozások</h2>
+                    <p>Tilos:</p>
+                    <ul>
+                        <li>A szolgáltatás automatizált eszközökkel történő használata</li>
+                        <li>A weboldal tartalmának engedély nélküli másolása</li>
+                        <li>Káros szoftverek vagy vírusok terjesztése</li>
+                        <li>Illegális tevékenységek folytatása</li>
+                        <li>Más felhasználók zavarása</li>
+                    </ul>
+
+                    <h2>4. Adatok pontossága</h2>
+                    <p>Bár minden erőfeszítést megteszünk az árfolyam-adatok pontossága érdekében, nem garantáljuk azok hibamentességét. Az adatok kizárólag tájékoztató célokat szolgálnak, és nem minősülnek befektetési tanácsadásnak.</p>
+
+                    <h2>5. Felelősség korlátozása</h2>
+                    <p>A CryptoCalc nem vállal felelősséget:</p>
+                    <ul>
+                        <li>A szolgáltatás használatából eredő károkért</li>
+                        <li>Pontatlan árfolyam-információkból eredő veszteségekért</li>
+                        <li>Harmadik fél szolgáltatásaiért</li>
+                        <li>Szolgáltatás-kiesésekért</li>
+                    </ul>
+
+                    <h2>6. Szellemi tulajdon</h2>
+                    <p>A weboldal tartalma, design és funkcionalitás a CryptoCalc szellemi tulajdona. Minden jog fenntartva.</p>
+
+                    <h2>7. Harmadik fél szolgáltatásai</h2>
+                    <p>Szolgáltatásunk külső API-kat használ (CoinGecko, ExchangeRate-API). Ezek használatára azok saját feltételei vonatkoznak.</p>
+
+                    <h2>8. Szolgáltatás módosítása</h2>
+                    <p>Fenntartjuk a jogot a szolgáltatás bármikori módosítására, korlátozására vagy megszüntetésére előzetes értesítés nélkül.</p>
+
+                    <h2>9. Alkalmazandó jog</h2>
+                    <p>Ezen feltételekre a magyar jog az irányadó. Vitás kérdések rendezésére a magyar bíróságok illetékesek.</p>
+
+                    <h2>10. Kapcsolat</h2>
+                    <p>A felhasználási feltételekkel kapcsolatos kérdéseit az alábbi címre küldheti:</p>
+                    <p>https://github.com/LordAthis/cYc/issues</p>
+
+                    <h2>11. Feltételek módosítása</h2>
+                    <p>Ezeket a feltételeket bármikor módosíthatjuk. A módosítások ezen az oldalon kerülnek közzétételre. A szolgáltatás további használatával Ön elfogadja a módosított feltételeket.</p>
+
+                    <h2>12. Elválaszthatóság</h2>
+                    <p>Ha ezen feltételek bármely része érvénytelennek bizonyul, a többi rendelkezés továbbra is érvényben marad.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <a href="about.html" class="footer-link">Rólunk</a>
+                <a href="contact.html" class="footer-link">Kapcsolat</a>
+                <a href="privacy.html" class="footer-link">Adatvédelem</a>
+                <a href="terms.html" class="footer-link">Felhasználási feltételek</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
