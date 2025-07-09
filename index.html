@@ -400,6 +400,10 @@
                 document.getElementById('loginBtn').addEventListener('click', () => {
                     alert('Bejelentkezés funkció hamarosan elérhető!');
                 });
+
+                // ÚJ: Input formázás
+                this.fromAmount.addEventListener('blur', () => this.formatInputField());
+                this.fromAmount.addEventListener('focus', () => this.cleanInputField());
             }
 
             debounceCalculate() {
@@ -599,6 +603,25 @@
                     this.lastUpdated.textContent = `Last updated: ${this.lastUpdate.toLocaleString()}`;
                 }
             }
+        }
+
+        formatInputField() {
+            const value = this.parseInputValue(this.fromAmount.value);
+            if (value && !isNaN(value) && value > 0) {
+                const currency = this.fromCurrency.value;
+                this.fromAmount.value = this.formatNumber(parseFloat(value), currency);
+            }
+        }
+
+        cleanInputField() {
+            // Távolítsa el az apostrofokat és váltsa át a vesszőt pontra
+            this.fromAmount.value = this.parseInputValue(this.fromAmount.value);
+        }
+
+        parseInputValue(value) {
+            if (!value) return '';
+            // Távolítsa el az apostrofokat és váltsa át a vesszőt pontra
+            return value.replace(/'/g, '').replace(/,/g, '.');
         }
 
         // Initialize calculator when DOM is loaded
