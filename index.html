@@ -416,9 +416,14 @@
             async loadRates() {
                 this.showLoading(true);
                 try {
-                    // Using CoinGecko API for crypto prices
-                    const cryptoResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,binancecoin,tron,usd-coin,tether&vs_currencies=usd,eur,huf');
-                    const cryptoData = await cryptoResponse.json();
+                    // Using CORS proxy for API calls
+                    const proxyUrl = 'https://api.allorigins.win/get?url=';
+                    
+                    // CoinGecko API through proxy
+                    const cryptoUrl = encodeURIComponent('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,binancecoin,tron,usd-coin,tether&vs_currencies=usd,eur,huf');
+                    const cryptoResponse = await fetch(proxyUrl + cryptoUrl);
+                    const cryptoResult = await cryptoResponse.json();
+                    const cryptoData = JSON.parse(cryptoResult.contents);
                     
                     // Process crypto data
                     this.rates = {
@@ -459,9 +464,11 @@
                         }
                     };
 
-                    // Add fiat cross-rates
-                    const fiatResponse = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-                    const fiatData = await fiatResponse.json();
+                    // Fiat rates through proxy
+                    const fiatUrl = encodeURIComponent('https://api.exchangerate-api.com/v4/latest/USD');
+                    const fiatResponse = await fetch(proxyUrl + fiatUrl);
+                    const fiatResult = await fiatResponse.json();
+                    const fiatData = JSON.parse(fiatResult.contents);
                     
                     this.rates['USD'] = {
                         'EUR': 1 / fiatData.rates.EUR,
