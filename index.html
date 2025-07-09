@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>cYc - Professional Crypto Price Calculator</title>
     <style>
+        /* (A korábbi CSS változatlan, csak a JS-hez szükséges) */
         * {
             margin: 0;
             padding: 0;
@@ -327,10 +328,10 @@
                             <option value="EUR">Euro (EUR)</option>
                             <option value="HUF">Magyar Forint (HUF)</option>
                         </select>
-                        <input type="number" class="amount-input" id="fromAmount" placeholder="0.00" step="any">
+                        <input type="text" class="amount-input" id="fromAmount" placeholder="0.00" inputmode="decimal" />
                     </div>
                     
-                    <button class="swap-button" id="swapButton">⇄</button>
+                    <button class="swap-button" id="swapButton" title="Valuta csere">⇄</button>
                     
                     <div class="currency-group">
                         <select class="currency-select" id="toCurrency">
@@ -345,7 +346,7 @@
                             <option value="USDC">USD Coin (USDC)</option>
                             <option value="USDT">Tether (USDT)</option>
                         </select>
-                        <input type="number" class="amount-input" id="toAmount" placeholder="0.00" step="any" readonly>
+                        <input type="text" class="amount-input" id="toAmount" placeholder="0.00" readonly />
                     </div>
                 </div>
 
@@ -374,12 +375,16 @@
                 this.rates = {};
                 this.lastUpdate = null;
                 this.debounceTimer = null;
-                
+
+                // Választható formázási mód (apostrof vagy szóköz)
+                // Apostrof: true, Szóköz: false
+                this.useApostrophes = true;
+
                 this.initElements();
                 this.initEventListeners();
                 this.loadRates();
             }
-            
+
             initElements() {
                 this.fromCurrency = document.getElementById('fromCurrency');
                 this.toCurrency = document.getElementById('toCurrency');
@@ -397,13 +402,11 @@
                 this.fromCurrency.addEventListener('change', () => this.calculate());
                 this.toCurrency.addEventListener('change', () => this.calculate());
                 this.swapButton.addEventListener('click', () => this.swapCurrencies());
-                
-                // Login button click handler
+
                 document.getElementById('loginBtn').addEventListener('click', () => {
                     alert('Bejelentkezés funkció hamarosan elérhető!');
                 });
 
-                // Input formázás
                 this.fromAmount.addEventListener('blur', () => this.formatInputField());
                 this.fromAmount.addEventListener('focus', () => this.cleanInputField());
             }
@@ -416,16 +419,12 @@
             async loadRates() {
                 this.showLoading(true);
                 try {
-                    // Using CORS proxy for API calls
-                    const proxyUrl = 'https://api.allorigins.win/get?url=';
-                    
-                    // CoinGecko API through proxy
-                    const cryptoUrl = encodeURIComponent('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,binancecoin,tron,usd-coin,tether&vs_currencies=usd,eur,huf');
-                    const cryptoResponse = await fetch(proxyUrl + cryptoUrl);
-                    const cryptoResult = await cryptoResponse.json();
-                    const cryptoData = JSON.parse(cryptoResult.contents);
-                    
-                    // Process crypto data
+                    // Proxy nélkül közvetlen API hívások
+
+                    // CoinGecko API
+                    const cryptoResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,binancecoin,tron,usd-coin,tether&vs_currencies=usd,eur,huf');
+                    const cryptoData = await cryptoResponse.json();
+
                     this.rates = {
                         'BTC': {
                             'USD': cryptoData.bitcoin.usd,
@@ -464,36 +463,34 @@
                         }
                     };
 
-                    // Fiat rates through proxy
-                    const fiatUrl = encodeURIComponent('https://api.exchangerate-api.com/v4/latest/USD');
-                    const fiatResponse = await fetch(proxyUrl + fiatUrl);
-                    const fiatResult = await fiatResponse.json();
-                    const fiatData = JSON.parse(fiatResult.contents);
-                    
+                    // Fiat árfolyamok (USD bázison)
+                    const fiatResponse = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+                    const fiatData = await fiatResponse.json();
+
                     this.rates['USD'] = {
-                        'EUR': 1 / fiatData.rates.EUR,
-                        'HUF': 1 / fiatData.rates.HUF,
+                        'EUR': fiatData.rates.EUR,
+                        'HUF': fiatData.rates.HUF,
                         'USD': 1
                     };
-                    
+
                     this.rates['EUR'] = {
-                        'USD': fiatData.rates.EUR,
-                        'HUF': fiatData.rates.EUR / fiatData.rates.HUF,
+                        'USD': 1 / fiatData.rates.EUR,
+                        'HUF': fiatData.rates.HUF / fiatData.rates.EUR,
                         'EUR': 1
                     };
-                    
+
                     this.rates['HUF'] = {
-                        'USD': fiatData.rates.HUF,
-                        'EUR': fiatData.rates.HUF / fiatData.rates.EUR,
+                        'USD': 1 / fiatData.rates.HUF,
+                        'EUR': fiatData.rates.EUR / fiatData.rates.HUF,
                         'HUF': 1
                     };
 
                     this.lastUpdate = new Date();
                     this.updateLastUpdatedDisplay();
                     this.calculate();
-                    
+
                 } catch (error) {
-                    this.showError('Failed to load exchange rates. Please try again later.');
+                    this.showError('Nem sikerült betölteni az árfolyamokat. Kérjük, próbálja újra később.');
                     console.error('Error loading rates:', error);
                 } finally {
                     this.showLoading(false);
@@ -514,88 +511,95 @@
                 try {
                     const rate = this.getExchangeRate(fromCur, toCur);
                     const result = amount * rate;
-        
-                    // Output mező: NINCS formázás
+
+                    // Formázott megjelenítés a toAmount-ban is
                     const isCrypto = ['BTC', 'ETH', 'SOL', 'BNB', 'TRX'].includes(toCur);
-                    this.toAmount.value = isCrypto 
-                        ? (result < 0.0001 ? result.toExponential(4) : result.toFixed(8))
-                        : (toCur === 'HUF' ? result.toFixed(0) : result.toFixed(2));
-        
-                    // Rate info: formázott
-                    this.rateInfo.textContent = `1 ${fromCur} = ${this.formatNumber(rate, toCur)} ${toCur}`;
+
+                    // Tizedesjegyek száma (kriptóknál 8, fiatnál 2 vagy 0)
+                    let decimals;
+                    if (isCrypto) {
+                        decimals = 8;
+                    } else if (toCur === 'HUF') {
+                        decimals = 0;
+                    } else {
+                        decimals = 2;
+                    }
+
+                    this.toAmount.value = this.formatNumber(result, decimals, toCur);
+
+                    this.rateInfo.textContent = `1 ${fromCur} = ${this.formatNumber(rate, decimals, toCur)} ${toCur}`;
                     this.hideError();
-        
+
                 } catch (error) {
-                    this.showError('Exchange rate not available');
+                    this.showError('Az árfolyam nem elérhető');
                     console.error('Calculation error:', error);
                 }
             }
 
             getExchangeRate(fromCurrency, toCurrency) {
                 if (fromCurrency === toCurrency) return 1;
-                
-                // Direct rate
+
+                // Direkt árfolyam
                 if (this.rates[fromCurrency] && this.rates[fromCurrency][toCurrency]) {
                     return this.rates[fromCurrency][toCurrency];
                 }
-                
-                // Cross rate through USD
-                if (this.rates[fromCurrency] && this.rates[fromCurrency]['USD'] && 
+
+                // Keresztárfolyam USD-n keresztül
+                if (this.rates[fromCurrency] && this.rates[fromCurrency]['USD'] &&
                     this.rates[toCurrency] && this.rates[toCurrency]['USD']) {
                     return this.rates[fromCurrency]['USD'] / this.rates[toCurrency]['USD'];
                 }
-                
-                // Inverse rate
+
+                // Inverz árfolyam
                 if (this.rates[toCurrency] && this.rates[toCurrency][fromCurrency]) {
                     return 1 / this.rates[toCurrency][fromCurrency];
                 }
-                
+
                 throw new Error('Exchange rate not found');
             }
 
-            formatNumber(num, currency) {
-                const isCrypto = ['BTC', 'ETH', 'SOL', 'BNB', 'TRX'].includes(currency);
-                const isFiat = ['USD', 'EUR', 'HUF'].includes(currency);
-    
-                let formattedNum;
-                if (isCrypto) {
-                    formattedNum = num < 0.0001 ? num.toExponential(4) : num.toFixed(8);
-                } else if (currency === 'HUF') {
-                    formattedNum = num.toFixed(0);
-                } else {
-                    formattedNum = num.toFixed(2);
-                }
-    
-                // Ezres elválasztók hozzáadása apostrofokkal
-                return this.addThousandSeparators(formattedNum);
+            // Szám formázása a beállított stílus szerint
+            formatNumber(num, decimals, currency) {
+                if (isNaN(num)) return '';
+
+                // Fix tizedesjegyek
+                let fixedNum = num.toFixed(decimals);
+
+                // Szétválasztjuk egész és tizedes részekre
+                let [integerPart, decimalPart] = fixedNum.split('.');
+
+                // Ezres elválasztó karakter
+                let separator = this.useApostrophes ? "'" : " ";
+
+                // Ezres elválasztás (jobbról balra)
+                integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, separator);
+
+                // Tizedesjel karakter (apostrofosnál vessző, szóközösnél pont)
+                let decimalSeparator = this.useApostrophes ? "," : ".";
+
+                return decimalPart ? integerPart + decimalSeparator + decimalPart : integerPart;
             }
 
-            addThousandSeparators(numStr) {
-                const parts = numStr.split('.');
-                const integerPart = parts[0];
-                const decimalPart = parts[1];
-    
-                // Ezres elválasztók hozzáadása apostrofokkal (jobbról balra)
-                const withSeparators = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, "'");
-    
-                return decimalPart ? `${withSeparators},${decimalPart}` : withSeparators;
+            // Bemeneti érték megtisztítása: apostrofok és szóközök eltávolítása, vesszőt ponttá alakítás
+            parseInputValue(value) {
+                if (!value) return '';
+                // Eltávolítjuk az apostrofokat és szóközöket, vesszőt ponttá alakítjuk
+                return value.replace(/['\s]/g, '').replace(/,/g, '.');
             }
 
             formatInputField() {
-                const value = this.parseInputValue(this.fromAmount.value);
-                if (value && !isNaN(value) && value > 0) {
+                const rawValue = this.parseInputValue(this.fromAmount.value);
+                if (rawValue && !isNaN(rawValue) && Number(rawValue) > 0) {
                     const currency = this.fromCurrency.value;
-                    this.fromAmount.value = this.formatNumber(parseFloat(value), currency);
+                    // Tizedes jegyek száma
+                    let decimals = ['BTC', 'ETH', 'SOL', 'BNB', 'TRX'].includes(currency) ? 8 : (currency === 'HUF' ? 0 : 2);
+                    this.fromAmount.value = this.formatNumber(Number(rawValue), decimals, currency);
                 }
             }
 
             cleanInputField() {
+                // Bemenet megtisztítása formázott értékből (pl. apostrof, szóköz, vessző)
                 this.fromAmount.value = this.parseInputValue(this.fromAmount.value);
-            }
-
-            parseInputValue(value) {
-                if (!value) return '';
-                return value.replace(/'/g, '').replace(/,/g, '.');
             }
 
             swapCurrencies() {
@@ -603,11 +607,13 @@
                 const toCur = this.toCurrency.value;
                 const fromAmt = this.parseInputValue(this.fromAmount.value);
                 const toAmt = this.parseInputValue(this.toAmount.value);
-                
+
                 this.fromCurrency.value = toCur;
                 this.toCurrency.value = fromCur;
-                this.fromAmount.value = toAmt;
-                
+
+                // A swap után az input mezőbe az eredeti fromAmount értéket állítjuk vissza, nem a toAmount-ot
+                this.fromAmount.value = fromAmt || '';
+
                 this.calculate();
             }
 
@@ -626,17 +632,17 @@
 
             updateLastUpdatedDisplay() {
                 if (this.lastUpdate) {
-                    this.lastUpdated.textContent = `Last updated: ${this.lastUpdate.toLocaleString()}`;
+                    this.lastUpdated.textContent = `Utolsó frissítés: ${this.lastUpdate.toLocaleString()}`;
                 }
             }
         }
 
-        // Initialize calculator when DOM is loaded
+        // Inicializálás
         document.addEventListener('DOMContentLoaded', () => {
-            new CryptoCalculator();
+            window.calculator = new CryptoCalculator();
         });
 
-        // Refresh rates every 30 seconds
+        // Árfolyamok frissítése 30 másodpercenként
         setInterval(() => {
             if (window.calculator) {
                 window.calculator.loadRates();
