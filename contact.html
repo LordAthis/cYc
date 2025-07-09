@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kapcsolat - cYc</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 3rem 0;
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            color: #333;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            font-weight: 300;
+            text-align: center;
+        }
+
+        .content {
+            color: #555;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-form {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #5a67d8;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .contact-item {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .footer {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .content-card {
+                margin: 1rem;
+                padding: 2rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">cYc - CryptoCalc</a>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Kalkulátor</a>
+                    <a href="about.html" class="nav-link">Rólunk</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="content-card">
+                <h1 class="page-title">Kapcsolat</h1>
+                
+                <div class="content">
+                    <p>Szeretnénk hallani Önről! Legyen szó kérdésekről, javaslatokról vagy technikai támogatásról, csapatunk itt van, hogy segítsen.</p>
+
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <h3>E-mail támogatás</h3>
+                            <p>hamarosan...</p>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">💬</div>
+                            <h3>Általános kérdések</h3>
+                            <p>hamarosan...</p>
+                            <p>Partnerségek és üzleti megkeresések: A Git Hub projekten keresztül!</p>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">🐛</div>
+                            <h3>Hibabejelentések</h3>
+                            <p>https://github.com/LordAthis/cYc/issues</p>
+                            <p>Segítsen fejleszteni szolgáltatásunkat hibabejelentéssel</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-form">
+                        <h2 style="margin-bottom: 1.5rem; color: #333;">Küldjön üzenetet</h2>
+                        <form>
+                            <div class="form-group">
+                                <label for="name" class="form-label">Név *</label>
+                                <input type="text" id="name" name="name" class="form-input" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email" class="form-label">E-mail *</label>
+                                <input type="email" id="email" name="email" class="form-input" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="subject" class="form-label">Tárgy *</label>
+                                <select id="subject" name="subject" class="form-select" required>
+                                    <option value="">Válasszon témát</option>
+                                    <option value="technical">Technikai támogatás</option>
+                                    <option value="feature">Funkció kérés</option>
+                                    <option value="bug">Hibabejelentés</option>
+                                    <option value="business">Üzleti megkeresés</option>
+                                    <option value="other">Egyéb</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message" class="form-label">Üzenet *</label>
+                                <textarea id="message" name="message" class="form-textarea" placeholder="Kérjük, részletesen írja le kérdését..." required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="submit-btn">Üzenet küldése</button>
+                        </form>
+                    </div>
+
+                    <p><strong>Válaszidő:</strong> Minden megkeresésre törekszünk minél hamarabb válaszolni munkanapokon. Sürgős technikai problémák esetén kérjük, írja be a tárgyba: "SÜRGŐS", vagy jelezze a Git Hub-on: https://github.com/LordAthis/cYc/issues.</p>
+
+                    <p><strong>Adatvédelem:</strong> Tiszteletben tartjuk az Ön magánéletét, és soha nem osztjuk meg kapcsolati adatait harmadik felekkel. Minden kommunikáció bizalmasan kezelünk.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <a href="about.html" class="footer-link">Rólunk</a>
+                <a href="contact.html" class="footer-link">Kapcsolat</a>
+                <a href="privacy.html" class="footer-link">Adatvédelem</a>
+                <a href="terms.html" class="footer-link">Felhasználási feltételek</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Köszönjük üzenetét! Hamarosan válaszolunk!');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
