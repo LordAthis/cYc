@@ -226,6 +226,31 @@
                 font-size: 1.5rem;
             }
 
+            .login-btn {
+                background: rgba(255, 255, 255, 0.1);
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                color: rgba(255, 255, 255, 0.9);
+                padding: 0.5rem 1rem;
+                border-radius: 8px;
+                font-weight: 500;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                transition: all 0.3s ease;
+                font-size: 0.9rem;
+            }
+
+            .login-btn:hover {
+                background: rgba(255, 255, 255, 0.15);
+                border-color: rgba(255, 255, 255, 0.4);
+                color: white;
+            }
+
+            .login-icon {
+                font-size: 1rem;
+            }
+            
             .amount-input {
                 font-size: 1.1rem;
                 padding: 0.9rem;
@@ -266,17 +291,19 @@
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <a href="#" class="logo">cYc - CryptoCalc</a>
-                <div class="nav-links">
-                    <a href="#" class="nav-link">Élő árfolyamok</a>
-                    <a href="#" class="nav-link">Kalkulátor</a>
-                </div>
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <a href="/" class="logo">cYc - CryptoCalc</a>
+            <div class="nav-links">
+                <button class="login-btn" id="loginBtn" title="Bejelentkezés (hamarosan)">
+                    <span class="login-icon">👤</span>
+                    Belépés
+                </button>
             </div>
         </div>
-    </header>
+    </div>
+</header>
 
     <main class="main-content">
         <div class="container">
@@ -349,7 +376,7 @@
                 this.initEventListeners();
                 this.loadRates();
             }
-
+            
             initElements() {
                 this.fromCurrency = document.getElementById('fromCurrency');
                 this.toCurrency = document.getElementById('toCurrency');
@@ -367,6 +394,12 @@
                 this.fromCurrency.addEventListener('change', () => this.calculate());
                 this.toCurrency.addEventListener('change', () => this.calculate());
                 this.swapButton.addEventListener('click', () => this.swapCurrencies());
+
+                    
+                // Login button click handler
+                document.getElementById('loginBtn').addEventListener('click', () => {
+                    alert('Bejelentkezés funkció hamarosan elérhető!');
+                });
             }
 
             debounceCalculate() {
