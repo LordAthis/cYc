@@ -493,7 +493,7 @@
                 const amount = parseFloat(this.fromAmount.value) || 0;
 
                 if (amount === 0) {
-                    this.toAmount.value = this.formatNumber(result, toCur).replace(/'/g, '').replace(/,/g, '.');
+                    this.toAmount.value = '';
                     this.rateInfo.textContent = '';
                     return;
                 }
@@ -501,11 +501,17 @@
                 try {
                     const rate = this.getExchangeRate(fromCur, toCur);
                     const result = amount * rate;
-                    
-                    this.toAmount.value = this.formatNumber(result, toCur);
+        
+                    // Output mező: NINCS formázás (hogy parse-olható legyen)
+                    const isCrypto = ['BTC', 'ETH', 'SOL', 'BNB', 'TRX'].includes(toCur);
+                    this.toAmount.value = isCrypto 
+                        ? (result < 0.0001 ? result.toExponential(4) : result.toFixed(8))
+                        : (toCur === 'HUF' ? result.toFixed(0) : result.toFixed(2));
+        
+                    // Rate info: FORMÁZOTT (csak szöveg)
                     this.rateInfo.textContent = `1 ${fromCur} = ${this.formatNumber(rate, toCur)} ${toCur}`;
                     this.hideError();
-                    
+        
                 } catch (error) {
                     this.showError('Exchange rate not available');
                     console.error('Calculation error:', error);
