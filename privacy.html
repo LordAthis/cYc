@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adatvédelmi Szabályzat - CryptoCalc</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 3rem 0;
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            color: #333;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            font-weight: 300;
+            text-align: center;
+        }
+
+        .content {
+            color: #555;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .content h2 {
+            color: #333;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .content p {
+            margin-bottom: 1.2rem;
+        }
+
+        .content ul {
+            margin-bottom: 1.2rem;
+            padding-left: 2rem;
+        }
+
+        .content li {
+            margin-bottom: 0.5rem;
+        }
+
+                <h1 class="page-title">Adatvédelmi Szabályzat</h1>
+                
+                <div class="content">
+                    <div class="last-updated">
+                        <strong>Utolsó frissítés:</strong> 2025. július 9.
+                    </div>
+
+                    <p>A CryptoCalc elkötelezett az Ön személyes adatainak védelme mellett. Ez az Adatvédelmi Szabályzat ismerteti, hogyan gyűjtjük, használjuk és védjük az Ön információit szolgáltatásunk használata során.</p>
+
+                    <h2>1. Információgyűjtés</h2>
+                    <p><strong>Személyes adatok:</strong> A CryptoCalc nem gyűjt személyes adatokat a kalkulátor használata során. Minden számítás helyileg, az Ön böngészőjében történik.</p>
+                    <p><strong>Technikai adatok:</strong> Weboldalunk automatikusan gyűjthet bizonyos technikai információkat, mint például:</p>
+                    <ul>
+                        <li>IP-cím</li>
+                        <li>Böngésző típusa és verziója</li>
+                        <li>Operációs rendszer</li>
+                        <li>Látogatási idő és dátum</li>
+                        <li>Meglátogatott oldalak</li>
+                    </ul>
+
+                    <h2>2. Információ felhasználása</h2>
+                    <p>A gyűjtött információkat a következő célokra használjuk:</p>
+                    <ul>
+                        <li>Szolgáltatásunk biztosítása és fejlesztése</li>
+                        <li>Technikai támogatás nyújtása</li>
+                        <li>Biztonság és visszaélések megelőzése</li>
+                        <li>Statisztikai elemzések készítése</li>
+                    </ul>
+
+                    <h2>3. Sütik (Cookies)</h2>
+                    <p>Weboldalunk sütiket használhat a felhasználói élmény javítása érdekében. A sütik kis szöveges fájlok, amelyeket a böngésző tárol az Ön eszközén. Ön bármikor letilthatja a sütiket böngészője beállításaiban.</p>
+
+                    <h2>4. Adatok megosztása</h2>
+                    <p>Nem osztjuk meg, nem adjuk el és nem adjuk át személyes adatait harmadik feleknek, kivéve a következő esetekben:</p>
+                    <ul>
+                        <li>Jogi kötelezettség teljesítése</li>
+                        <li>Jogos érdekeink védelme</li>
+                        <li>Ön kifejezett hozzájárulása esetén</li>
+                    </ul>
+
+                    <h2>5. Adatbiztonság</h2>
+                    <p>Megfelelő technikai és szervezési intézkedéseket alkalmazunk adatai védelme érdekében. Azonban egyetlen internetes átvitel vagy elektronikus tárolás sem 100%-ban biztonságos.</p>
+
+                    <h2>6. Harmadik fél szolgáltatásai</h2>
+                    <p>Szolgáltatásunk külső API-kat használ árfolyam-információk beszerzéséhez:</p>
+                    <ul>
+                        <li>CoinGecko API - kriptovaluta árfolyamok</li>
+                        <li>ExchangeRate-API - deviza árfolyamok</li>
+                    </ul>
+                    <p>Ezek a szolgáltatások saját adatvédelmi szabályzattal rendelkeznek.</p>
+
+                    <h2>7. Gyermekek adatvédelme</h2>
+                    <p>Szolgáltatásunk nem irányul 13 év alatti gyermekekre, és tudatosan nem gyűjtünk tőlük személyes adatokat.</p>
+
+                    <h2>8. Jogai</h2>
+                    <p>Az alkalmazandó adatvédelmi jogszabályoknak megfelelően Önnek joga van:</p>
+                    <ul>
+                        <li>Hozzáférni személyes adataihoz</li>
+                        <li>Helyesbíteni pontatlan adatokat</li>
+                        <li>Törölni adatait bizonyos körülmények között</li>
+                        <li>Kifogást emelni adatfeldolgozás ellen</li>
+                    </ul>
+
+                    <h2>9. Kapcsolat</h2>
+                    <p>Ha kérdései vannak ezzel az Adatvédelmi Szabályzattal kapcsolatban, kérjük, lépjen kapcsolatba velünk:</p>
+                    <p><strong>E-mail:</strong> privacy@cryptocalc.com</p>
+
+                    <h2>10. Változások</h2>
+                    <p>Fenntartjuk a jogot, hogy ezt az Adatvédelmi Szabályzatot bármikor módosítsuk. A változásokat ezen az oldalon tesszük közzé.</p>
+                </div>
