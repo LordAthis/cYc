@@ -5,44 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - Az oldal nem található</title>
     <style>
-        /* Alapvető stílusok és reszponzivitás */
+        /* Alapvető stílusok */
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f5e6d3; /* A háttérképhez illeszkedő háttérszín */
-            color: #333;
+            /* Sötétebb homokszín háttér, ami csak akkor látszik, ha a kép betöltése lassú */
+            background-color: #c9b7a2; 
+            overflow: hidden; /* Megakadályozza a görgetést */
+        }
+
+        /* A háttérkép, ami kitölti az egész képernyőt */
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover; /* Kulcsfontosságú: Levágja a képet, hogy torzítás nélkül töltse ki a teret */
+            z-index: 1; /* A kép van leghátul */
+        }
+
+        /* A teljes tartalmi réteg, ami a képen van */
+        .content-overlay {
+            position: relative;
+            z-index: 2; /* Ez a réteg a kép fölött van */
+            width: 100%;
+            height: 100%;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            justify-content: flex-end; /* A szöveget az aljára igazítja */
             align-items: center;
             text-align: center;
-            overflow: hidden; /* Megakadályozza a felesleges görgetősávokat */
-        }
-
-        /* Fő tároló a tartalom központosításához */
-        .container {
-            max-width: 800px;
-            padding: 20px;
-        }
-
-        /* Reszponzív kép stílus */
-        .error-image {
-            max-width: 100%;
-            height: auto;
-            max-height: 60vh; /* A kép magassága ne legyen több, mint a képernyő 60%-a */
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-sizing: border-box;
+            padding: 40px 20px;
         }
 
         /* Felirat stílusa */
         .error-text {
-            font-size: 1.5rem;
-            font-weight: 500;
-            color: #4a3c2b;
-            margin-top: 25px;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #ffffff; /* Fehér szövegszín a jobb kontrasztért */
             line-height: 1.6;
+            /* Félátlátszó fekete háttér, hogy a szöveg olvasható legyen */
+            background-color: rgba(0, 0, 0, 0.6); 
+            padding: 20px 30px;
+            border-radius: 10px;
+            max-width: 90%;
         }
 
         /* Házikó ikon stílusa */
@@ -52,35 +63,41 @@
             right: 25px;
             width: 50px;
             height: 50px;
+            z-index: 3; /* Az ikon van legfelül, belóg a kép fölé */
             transition: transform 0.2s ease-in-out;
         }
 
         .home-icon:hover {
-            transform: scale(1.1); /* Kicsit megnő, ha ráviszik az egeret */
+            transform: scale(1.15);
         }
 
         .home-icon svg {
             width: 100%;
             height: 100%;
-            fill: #4a3c2b; /* A házikó színe */
+            fill: #ffffff; /* Fehér ikon, hogy jól látszódjon */
+            /* Az ikon kap egy kis árnyékot, hogy kiemelkedjen a háttérből */
+            filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.7)); 
         }
 
-        /* Média lekérdezés kisebb képernyőkre */
-        @media (max-width: 600px) {
+        /* Média lekérdezés kisebb képernyőkre (mobilnézet) */
+        @media (max-width: 768px) {
             .error-text {
                 font-size: 1.2rem;
+                padding: 15px 20px;
             }
 
             .home-icon {
                 width: 40px;
                 height: 40px;
-                top: 15px;
-                right: 15px;
+                top: 20px;
+                right: 20px;
             }
         }
     </style>
 </head>
 <body>
+
+    <img src="404_001.png" alt="" class="background-image">
 
     <a href="index.html" class="home-icon" aria-label="Főoldal">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -88,9 +105,7 @@
         </svg>
     </a>
 
-    <div class="container">
-        <img src="404_001.png" alt="Elképedt láma" class="error-image">
-        
+    <div class="content-overlay">
         <p class="error-text">
             Nincs probLÁMA! Ilyen oldal nem létezik, de nyugodtan fáradj a főoldalra a házikóra kattintva!
         </p>
