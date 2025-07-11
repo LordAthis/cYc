@@ -1,1 +1,100 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Az oldal nem található</title>
+    <style>
+        /* Alapvető stílusok és reszponzivitás */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f5e6d3; /* A háttérképhez illeszkedő háttérszín */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden; /* Megakadályozza a felesleges görgetősávokat */
+        }
 
+        /* Fő tároló a tartalom központosításához */
+        .container {
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        /* Reszponzív kép stílus */
+        .error-image {
+            max-width: 100%;
+            height: auto;
+            max-height: 60vh; /* A kép magassága ne legyen több, mint a képernyő 60%-a */
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Felirat stílusa */
+        .error-text {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #4a3c2b;
+            margin-top: 25px;
+            line-height: 1.6;
+        }
+
+        /* Házikó ikon stílusa */
+        .home-icon {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            width: 50px;
+            height: 50px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .home-icon:hover {
+            transform: scale(1.1); /* Kicsit megnő, ha ráviszik az egeret */
+        }
+
+        .home-icon svg {
+            width: 100%;
+            height: 100%;
+            fill: #4a3c2b; /* A házikó színe */
+        }
+
+        /* Média lekérdezés kisebb képernyőkre */
+        @media (max-width: 600px) {
+            .error-text {
+                font-size: 1.2rem;
+            }
+
+            .home-icon {
+                width: 40px;
+                height: 40px;
+                top: 15px;
+                right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="home-icon" aria-label="Főoldal">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5z"/>
+        </svg>
+    </a>
+
+    <div class="container">
+        <img src="404_001.png" alt="Elképedt láma" class="error-image">
+        
+        <p class="error-text">
+            Nincs probLÁMA! Ilyen oldal nem létezik, de nyugodtan fáradj a főoldalra a házikóra kattintva!
+        </p>
+    </div>
+
+</body>
+</html>
