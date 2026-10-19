@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!-- Verzio: v2.0.0 - 2026-10-19 -->
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Új jelszó - cYc</title>
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#667eea">
+    <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <script src="/assets/js/theme-init.js"></script>
+    <script src="/assets/js/common.js" defer></script>
+    <script src="/assets/js/auth-pages.js" defer></script>
+</head>
+<body data-page="reset">
+    <header id="siteHeader" class="header"></header>
+
+    <main class="main-content center">
+        <div class="container">
+
+            <section class="card card-narrow">
+                <h1 class="page-title">Új jelszó beállítása</h1>
+                <div class="alert" id="formAlert" role="alert"></div>
+                <form class="form" id="resetForm" novalidate>
+                    <input type="text" autocomplete="username" hidden>
+                    <div class="field">
+                        <label for="password">Új jelszó</label>
+                        <div class="pw-wrap">
+                            <input class="input" type="password" id="password" autocomplete="new-password" required>
+                            <button type="button" class="pw-toggle" aria-label="Jelszó megjelenítése">👁</button>
+                        </div>
+                    </div>
+                    <div class="pw-meter" id="pwMeter"><span></span></div>
+                    <div class="hint" id="pwHint"></div>
+                    <div class="field">
+                        <label for="password2">Új jelszó még egyszer</label>
+                        <div class="pw-wrap">
+                            <input class="input" type="password" id="password2" autocomplete="new-password" required>
+                            <button type="button" class="pw-toggle" aria-label="Jelszó megjelenítése">👁</button>
+                        </div>
+                    </div>
+                    <button class="btn btn-block" type="submit">Jelszó mentése</button>
+                </form>
+                <div class="form-footer" id="afterReset" hidden><p><a class="btn" href="/login.html">Bejelentkezés</a></p></div>
+            </section>
+        </div>
+    </main>
+
+    <footer id="siteFooter" class="footer"></footer>
+</body>
+</html>

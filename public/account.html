@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<!-- Verzio: v2.0.0 - 2026-10-19 -->
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fiók és biztonság - cYc</title>
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#667eea">
+    <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <script src="/assets/js/theme-init.js"></script>
+    <script src="/assets/js/common.js" defer></script>
+    <script src="/assets/js/account.js" defer></script>
+</head>
+<body data-page="account">
+    <header id="siteHeader" class="header"></header>
+
+    <main class="main-content">
+        <div class="container">
+
+            <div class="card-medium">
+                <section class="card">
+                    <h1 class="page-title">Fiók és biztonság</h1>
+                    <form class="form" id="profileForm">
+                        <div class="field">
+                            <label for="accEmail">E-mail cím <span id="emailBadge"></span></label>
+                            <input class="input" id="accEmail" readonly>
+                        </div>
+                        <div class="field">
+                            <label for="accName">Megjelenített név</label>
+                            <input class="input" id="accName" maxlength="60" autocomplete="nickname">
+                        </div>
+                        <div><button class="btn" type="submit">Mentés</button></div>
+                    </form>
+                </section>
+
+                <section class="card">
+                    <h2 class="section-title" id="pwTitle">Jelszó módosítása</h2>
+                    <p class="hint" id="pwInfo"></p>
+                    <form class="form" id="pwForm">
+                        <input type="text" autocomplete="username" hidden>
+                        <div class="field" id="currentPwField">
+                            <label for="curPw">Jelenlegi jelszó</label>
+                            <div class="pw-wrap"><input class="input" type="password" id="curPw" autocomplete="current-password"><button type="button" class="pw-toggle" aria-label="Jelszó megjelenítése">👁</button></div>
+                        </div>
+                        <div class="field">
+                            <label for="newPw">Új jelszó</label>
+                            <div class="pw-wrap"><input class="input" type="password" id="newPw" autocomplete="new-password"><button type="button" class="pw-toggle" aria-label="Jelszó megjelenítése">👁</button></div>
+                        </div>
+                        <div class="pw-meter" id="pwMeter"><span></span></div>
+                        <div class="field">
+                            <label for="newPw2">Új jelszó még egyszer</label>
+                            <div class="pw-wrap"><input class="input" type="password" id="newPw2" autocomplete="new-password"><button type="button" class="pw-toggle" aria-label="Jelszó megjelenítése">👁</button></div>
+                        </div>
+                        <div><button class="btn" type="submit">Jelszó mentése</button></div>
+                    </form>
+                </section>
+
+                <section class="card">
+                    <h2 class="section-title">Kétlépcsős azonosítás (2FA) <span id="tfaBadge"></span></h2>
+                    <div id="tfaOff">
+                        <p>Belépéskor a jelszó mellett egy telefonos hitelesítő alkalmazás (Google Authenticator, Microsoft Authenticator,
+                           Authy, 2FAS...) által generált kódot is kérünk. Erősen ajánlott.</p>
+                        <p style="margin-top:1rem"><button class="btn" type="button" id="tfaStart">2FA bekapcsolása</button></p>
+                    </div>
+                    <div id="tfaSetup" hidden>
+                        <p><strong>1.</strong> Olvasd be a QR-kódot a hitelesítő alkalmazással, vagy írd be kézzel a kulcsot:</p>
+                        <img class="qr" id="tfaQr" alt="2FA QR-kód" width="220" height="220">
+                        <div class="secret-code" id="tfaSecret"></div>
+                        <form class="form" id="tfaEnableForm" style="margin-top:1rem">
+                            <div class="field">
+                                <label for="tfaCode"><strong>2.</strong> Írd be az alkalmazás által mutatott 6 jegyű kódot</label>
+                                <input class="input code-input" id="tfaCode" inputmode="numeric" autocomplete="one-time-code" maxlength="6" required>
+                            </div>
+                            <div class="btn-row"><button class="btn" type="submit">Bekapcsolás</button><button class="btn btn-secondary" type="button" id="tfaCancel">Mégse</button></div>
+                        </form>
+                    </div>
+                    <div id="tfaOn" hidden>
+                        <p>Fel nem használt visszaállító kódok: <strong id="recoveryLeft">0</strong> / 10</p>
+                        <form class="inline-form" id="tfaRegenForm" style="margin-top:1rem">
+                            <div class="field"><label for="tfaRegenCode">Új visszaállító kódok (2FA kód)</label><input class="input" id="tfaRegenCode" inputmode="numeric" maxlength="6" autocomplete="one-time-code" required></div>
+                            <button class="btn btn-secondary" type="submit">Új kódok</button>
+                        </form>
+                        <form class="form" id="tfaDisableForm" style="margin-top:1.4rem">
+                            <h3 class="label">2FA kikapcsolása</h3>
+                            <div class="field"><label for="tfaDisableCode">2FA kód vagy visszaállító kód</label><input class="input" id="tfaDisableCode" maxlength="9" autocomplete="one-time-code" required></div>
+                            <div class="field" id="tfaDisablePwField">
+                            <label for="tfaDisablePw">Jelszó</label>
+                            <div class="pw-wrap"><input class="input" type="password" id="tfaDisablePw" autocomplete="current-password"><button type="button" class="pw-toggle" aria-label="Jelszó megjelenítése">👁</button></div>
+                        </div>
+                            <div><button class="btn btn-danger" type="submit">Kikapcsolás</button></div>
+                        </form>
+                    </div>
+                </section>
+
+                <section class="card" id="googleSection">
+                    <h2 class="section-title">Google fiók <span id="googleBadge"></span></h2>
+                    <p class="hint" style="margin-bottom:1rem">Összekapcsolás után Google-lel is beléphetsz. Bekapcsolt 2FA esetén a kódot ilyenkor is kérjük.</p>
+                    <div class="google-box" id="googleLinkBox"></div>
+                    <button class="btn btn-secondary" type="button" id="googleUnlink" hidden>Google fiók leválasztása</button>
+                </section>
+
+                <section class="card">
+                    <h2 class="section-title">Aktív munkamenetek
+                        <button class="btn btn-secondary btn-small" type="button" id="revokeOthers">Kiléptetés a többi eszközről</button>
+                    </h2>
+                    <div class="table-wrap">
+                        <table class="table"><thead><tr><th>Eszköz</th><th>IP</th><th>Utoljára aktív</th></tr></thead><tbody id="sessionsBody"></tbody></table>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <h2 class="section-title">Adataim</h2>
+                    <p>Letöltheted az összes rólad tárolt adatot (JSON), vagy véglegesen törölheted a fiókodat.</p>
+                    <div class="btn-row" style="margin-top:1rem">
+                        <button class="btn btn-secondary" type="button" id="exportBtn">Adatok letöltése</button>
+                        <button class="btn btn-danger" type="button" id="deleteBtn">Fiók törlése</button>
+                    </div>
+                </section>
+            </div>
+
+            <dialog class="modal" id="codesDialog">
+                <h2 class="section-title">Visszaállító kódok</h2>
+                <p>Mentsd el ezeket biztonságos helyre! Ha elveszíted a telefonod, ezekkel tudsz belépni. Mindegyik csak egyszer használható, és <strong>többé nem jelennek meg</strong>.</p>
+                <div id="codesBox" style="margin:1rem 0"></div>
+                <form method="dialog" class="btn-row">
+                    <button class="btn btn-secondary" type="button" id="codesCopy">Másolás</button>
+                    <button class="btn btn-secondary" type="button" id="codesDownload">Letöltés</button>
+                    <button class="btn" value="ok">Elmentettem</button>
+                </form>
+            </dialog>
+
+            <dialog class="modal" id="deleteDialog">
+                <form class="form" id="deleteForm">
+                    <h2 class="section-title">Fiók végleges törlése</h2>
+                    <p>A fiókod és minden hozzá tartozó adat (portfólió, kedvencek, előzmények) véglegesen törlődik. Ez nem vonható vissza.</p>
+                    <div class="field" id="delPwField">
+                            <label for="delPw">Jelszó</label>
+                            <div class="pw-wrap"><input class="input" type="password" id="delPw" autocomplete="current-password"><button type="button" class="pw-toggle" aria-label="Jelszó megjelenítése">👁</button></div>
+                        </div>
+                    <div class="field" id="delCodeField"><label for="delCode">2FA kód</label><input class="input" id="delCode" inputmode="numeric" maxlength="6"></div>
+                    <div class="field" id="delConfirmField"><label for="delConfirm">Írd be: TORLES</label><input class="input" id="delConfirm" autocomplete="off"></div>
+                    <div class="btn-row"><button class="btn btn-danger" type="submit">Végleges törlés</button><button class="btn btn-secondary" type="button" id="deleteCancel">Mégse</button></div>
+                </form>
+            </dialog>
+        </div>
+    </main>
+
+    <footer id="siteFooter" class="footer"></footer>
+</body>
+</html>

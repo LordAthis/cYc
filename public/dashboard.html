@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!-- Verzio: v2.0.0 - 2026-10-19 -->
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Portfólió és kedvencek - cYc</title>
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#667eea">
+    <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <script src="/assets/js/theme-init.js"></script>
+    <script src="/assets/js/common.js" defer></script>
+    <script src="/assets/js/dashboard.js" defer></script>
+</head>
+<body data-page="dashboard">
+    <header id="siteHeader" class="header"></header>
+
+    <main class="main-content">
+        <div class="container">
+
+            <div class="card-wide">
+                <section class="card">
+                    <h1 class="section-title" id="hello">Szia!</h1>
+                    <div class="alert" id="dashAlert" role="alert"></div>
+                    <div class="grid-2">
+                        <div class="stat"><div class="k">Portfólió értéke</div><div class="v" id="statTotal">–</div></div>
+                        <div class="stat"><div class="k">Tételek</div><div class="v" id="statCount">0</div></div>
+                    </div>
+                </section>
+
+                <section class="card" aria-labelledby="pfTitle">
+                    <h2 class="section-title"><span id="pfTitle">Portfólió</span>
+                        <label class="hint">Pénznem: <select class="select" id="baseCurrency" style="width:auto;display:inline-block;padding:0.4rem"></select></label>
+                    </h2>
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead><tr><th>Valuta</th><th class="num">Mennyiség</th><th>Megjegyzés</th><th class="num">Érték</th><th class="num">24 óra</th><th class="num"></th></tr></thead>
+                            <tbody id="portfolioBody"></tbody>
+                            <tfoot><tr><td colspan="3">Összesen</td><td class="num" id="portfolioTotal">–</td><td colspan="2"></td></tr></tfoot>
+                        </table>
+                    </div>
+                    <form class="inline-form" id="addHolding" style="margin-top:1.2rem">
+                        <div class="field"><label for="newCurrency">Valuta</label><select class="select" id="newCurrency"></select></div>
+                        <div class="field"><label for="newAmount">Mennyiség</label><input class="input" id="newAmount" inputmode="decimal" placeholder="0,5" required></div>
+                        <div class="field"><label for="newNote">Megjegyzés</label><input class="input" id="newNote" maxlength="80" placeholder="pl. Ledger, tőzsde"></div>
+                        <button class="btn" type="submit">Hozzáadás</button>
+                    </form>
+                </section>
+
+                <section class="card" aria-labelledby="favTitle">
+                    <h2 class="section-title" id="favTitle">Kedvenc párok</h2>
+                    <div id="favList"></div>
+                </section>
+
+                <section class="card" aria-labelledby="histTitle">
+                    <h2 class="section-title"><span id="histTitle">Előzmények</span>
+                        <span class="btn-row">
+                            <button class="btn btn-secondary btn-small" type="button" id="exportHistory">CSV letöltés</button>
+                            <button class="btn btn-secondary btn-small" type="button" id="clearHistory">Összes törlése</button>
+                        </span>
+                    </h2>
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead><tr><th>Időpont</th><th class="num">Összeg</th><th class="num">Eredmény</th><th class="num">Árfolyam</th><th class="num"></th></tr></thead>
+                            <tbody id="historyBody"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer id="siteFooter" class="footer"></footer>
+</body>
+</html>

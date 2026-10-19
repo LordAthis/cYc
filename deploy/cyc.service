@@ -1,0 +1,34 @@
+# Verzio: v2.0.0 - 2026-10-19
+# systemd szolgaltatas a cYc szerverhez.
+# Telepites:  sudo cp deploy/cyc.service /etc/systemd/system/cyc.service
+#             sudo systemctl daemon-reload && sudo systemctl enable --now cyc
+# Naplo:      journalctl -u cyc -f
+[Unit]
+Description=cYc - Crypto Calculator
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=cyc
+Group=cyc
+WorkingDirectory=/opt/cyc/server
+ExecStart=/usr/bin/node src/server.js
+Restart=on-failure
+RestartSec=5
+Environment=NODE_ENV=production
+
+# Vedelem: a folyamat csak a sajat adatmappajat irhatja
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/cyc/server/data
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+
+[Install]
+WantedBy=multi-user.target

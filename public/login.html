@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!-- Verzio: v2.0.0 - 2026-10-19 -->
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bejelentkezés - cYc</title>
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#667eea">
+    <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <script src="/assets/js/theme-init.js"></script>
+    <script src="/assets/js/common.js" defer></script>
+    <script src="/assets/js/auth-pages.js" defer></script>
+</head>
+<body data-page="login">
+    <header id="siteHeader" class="header"></header>
+
+    <main class="main-content center">
+        <div class="container">
+
+            <section class="card card-narrow">
+                <h1 class="page-title">Bejelentkezés</h1>
+                <div class="alert" id="formAlert" role="alert"></div>
+                <a href="#" id="resendLink" hidden>Megerősítő levél újraküldése</a>
+
+                <div id="stepPassword">
+                    <form class="form" id="loginForm" novalidate>
+                        <div class="field">
+                            <label for="email">E-mail cím</label>
+                            <input class="input" type="email" id="email" autocomplete="username" required>
+                        </div>
+                    <div class="field">
+                        <label for="password">Jelszó</label>
+                        <div class="pw-wrap">
+                            <input class="input" type="password" id="password" autocomplete="current-password" required>
+                            <button type="button" class="pw-toggle" aria-label="Jelszó megjelenítése">👁</button>
+                        </div>
+                    </div>
+                        <div class="captcha-box" id="captchaBox"></div>
+                        <button class="btn btn-block" type="submit">Belépés</button>
+                    </form>
+                    <div class="divider" id="googleDivider">vagy</div>
+                    <div class="google-box" id="googleBox"></div>
+                    <div class="form-footer">
+                        <p><a href="/forgot.html">Elfelejtetted a jelszavad?</a></p>
+                        <p>Még nincs fiókod? <a href="/register.html" id="registerLink">Regisztráció</a></p>
+                    </div>
+                </div>
+
+                <div id="stepMfa" hidden>
+                    <form class="form" id="mfaForm" novalidate>
+                        <p>Add meg a hitelesítő alkalmazásod (pl. Google Authenticator) által mutatott 6 jegyű kódot,
+                           vagy egy visszaállító kódot.</p>
+                        <div class="field">
+                            <label for="mfaCode">Kód</label>
+                            <input class="input code-input" id="mfaCode" inputmode="numeric" autocomplete="one-time-code" maxlength="9" required>
+                        </div>
+                        <button class="btn btn-block" type="submit">Ellenőrzés</button>
+                        <button class="link-btn" type="button" id="mfaCancel">Mégse, vissza</button>
+                    </form>
+                </div>
+            </section>
+            <dialog class="modal" id="termsDialog">
+                <form method="dialog" class="form">
+                    <h2 class="section-title">Új fiók létrehozása</h2>
+                    <p>Ehhez a Google fiókhoz még nem tartozik cYc fiók. A létrehozáshoz el kell fogadnod a
+                       <a href="/terms.html" target="_blank">felhasználási feltételeket</a> és az
+                       <a href="/privacy.html" target="_blank">adatvédelmi szabályzatot</a>.</p>
+                    <div class="btn-row">
+                        <button class="btn" value="yes">Elfogadom, létrehozom</button>
+                        <button class="btn btn-secondary" value="no">Mégse</button>
+                    </div>
+                </form>
+            </dialog>
+        </div>
+    </main>
+
+    <footer id="siteFooter" class="footer"></footer>
+</body>
+</html>

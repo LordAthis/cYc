@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!-- Verzio: v2.0.0 - 2026-10-19 -->
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Regisztráció - cYc</title>
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#667eea">
+    <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <script src="/assets/js/theme-init.js"></script>
+    <script src="/assets/js/common.js" defer></script>
+    <script src="/assets/js/auth-pages.js" defer></script>
+</head>
+<body data-page="register">
+    <header id="siteHeader" class="header"></header>
+
+    <main class="main-content center">
+        <div class="container">
+
+            <section class="card card-narrow">
+                <h1 class="page-title">Regisztráció</h1>
+                <div class="alert" id="formAlert" role="alert"></div>
+                <form class="form" id="registerForm" novalidate>
+                    <div class="field">
+                        <label for="displayName">Megjelenített név <span class="hint">(nem kötelező)</span></label>
+                        <input class="input" id="displayName" maxlength="60" autocomplete="nickname">
+                    </div>
+                    <div class="field">
+                        <label for="email">E-mail cím</label>
+                        <input class="input" type="email" id="email" autocomplete="email" required>
+                    </div>
+                    <div class="field">
+                        <label for="password">Jelszó</label>
+                        <div class="pw-wrap">
+                            <input class="input" type="password" id="password" autocomplete="new-password" required>
+                            <button type="button" class="pw-toggle" aria-label="Jelszó megjelenítése">👁</button>
+                        </div>
+                    </div>
+                    <div class="pw-meter" id="pwMeter"><span></span></div>
+                    <div class="hint" id="pwHint"></div>
+                    <div class="field">
+                        <label for="password2">Jelszó még egyszer</label>
+                        <div class="pw-wrap">
+                            <input class="input" type="password" id="password2" autocomplete="new-password" required>
+                            <button type="button" class="pw-toggle" aria-label="Jelszó megjelenítése">👁</button>
+                        </div>
+                    </div>
+                    <label class="check">
+                        <input type="checkbox" id="acceptTerms" required>
+                        <span>Elfogadom a <a href="/terms.html" target="_blank">felhasználási feltételeket</a> és az
+                        <a href="/privacy.html" target="_blank">adatvédelmi szabályzatot</a>.</span>
+                    </label>
+                    <div class="captcha-box" id="captchaBox"></div>
+                    <button class="btn btn-block" type="submit">Fiók létrehozása</button>
+                </form>
+                <div id="googleBlock">
+                    <div class="divider">vagy</div>
+                    <div class="google-box" id="googleBox"></div>
+                </div>
+                <div class="form-footer"><p>Már van fiókod? <a href="/login.html">Bejelentkezés</a></p></div>
+            </section>
+            <dialog class="modal" id="termsDialog">
+                <form method="dialog" class="form">
+                    <h2 class="section-title">Új fiók létrehozása</h2>
+                    <p>Ehhez a Google fiókhoz még nem tartozik cYc fiók. A létrehozáshoz el kell fogadnod a
+                       <a href="/terms.html" target="_blank">felhasználási feltételeket</a> és az
+                       <a href="/privacy.html" target="_blank">adatvédelmi szabályzatot</a>.</p>
+                    <div class="btn-row">
+                        <button class="btn" value="yes">Elfogadom, létrehozom</button>
+                        <button class="btn btn-secondary" value="no">Mégse</button>
+                    </div>
+                </form>
+            </dialog>
+        </div>
+    </main>
+
+    <footer id="siteFooter" class="footer"></footer>
+</body>
+</html>

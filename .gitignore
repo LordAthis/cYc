@@ -1,0 +1,10 @@
+# Verzio: v2.0.0 - 2026-10-19
+node_modules/
+server/.env
+server/data/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.log
+.DS_Store
+Thumbs.db

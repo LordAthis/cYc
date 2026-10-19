@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- Verzio: v2.0.0 - 2026-10-19 -->
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>cYc - Kripto árfolyam kalkulátor</title>
+    <meta name="description" content="Valós idejű kriptovaluta és deviza árfolyam-kalkulátor: BTC, ETH, SOL, USDT és társaik forintban, euróban, dollárban.">
+    <meta name="theme-color" content="#667eea">
+    <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <script src="/assets/js/theme-init.js"></script>
+    <script src="/assets/js/common.js" defer></script>
+    <script src="/assets/js/calculator.js" defer></script>
+</head>
+<body data-page="calc">
+    <header id="siteHeader" class="header"></header>
+
+    <main class="main-content center">
+        <div class="container">
+            <section class="card calculator-card" aria-labelledby="calcTitle">
+                <h1 class="page-title" id="calcTitle">Árfolyam számítás</h1>
+
+                <div class="fav-row" id="favRow" aria-label="Kedvenc párok"></div>
+
+                <div class="converter-section">
+                    <div class="currency-group">
+                        <label class="visually-hidden" for="fromCurrency">Miből</label>
+                        <select class="select" id="fromCurrency">
+                            <option value="BTC">Bitcoin (BTC)</option>
+                        </select>
+                        <label class="visually-hidden" for="fromAmount">Összeg</label>
+                        <input type="text" class="input amount-input" id="fromAmount" placeholder="0,00" inputmode="decimal" autocomplete="off">
+                    </div>
+
+                    <button class="swap-button" id="swapButton" type="button" title="Valuták cseréje" aria-label="Valuták cseréje">⇄</button>
+
+                    <div class="currency-group">
+                        <label class="visually-hidden" for="toCurrency">Mibe</label>
+                        <select class="select" id="toCurrency">
+                            <option value="HUF">Magyar forint (HUF)</option>
+                        </select>
+                        <div class="amount-wrap">
+                            <label class="visually-hidden" for="toAmount">Eredmény</label>
+                            <input type="text" class="input amount-input" id="toAmount" placeholder="0,00" readonly>
+                            <button type="button" class="copy-btn" id="copyBtn" title="Másolás" aria-label="Eredmény másolása">📋</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="calc-toolbar">
+                    <button type="button" class="chip" id="favBtn">☆ Kedvencekhez</button>
+                    <button type="button" class="chip" id="refreshBtn" title="Árfolyamok frissítése">⟳ Frissítés</button>
+                    <button type="button" class="chip" id="formatBtn" title="Számformátum váltása">1'234,56</button>
+                </div>
+
+                <div class="rate-info" id="loading" style="display:none"><span class="spinner" aria-hidden="true"></span> Árfolyamok betöltése...</div>
+                <div class="alert" id="error" role="alert"></div>
+                <div class="rate-info" id="rateInfo" aria-live="polite"></div>
+                <div class="rate-info" id="changeInfo"></div>
+                <div class="last-updated" id="lastUpdated"></div>
+            </section>
+        </div>
+    </main>
+
+    <footer id="siteFooter" class="footer"></footer>
+</body>
+</html>

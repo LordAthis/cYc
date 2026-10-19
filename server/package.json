@@ -1,0 +1,30 @@
+{
+  "name": "cyc-server",
+  "version": "2.0.0",
+  "description": "cYc - Crypto Calculator szerver (Express + SQLite): arfolyamok, fiokok, 2FA, portfolio",
+  "private": true,
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test test/*.test.js",
+    "admin": "node scripts/cyc-admin.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@node-rs/argon2": "^2.2.2",
+    "better-sqlite3": "^13.0.3",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^18.0.8",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.1",
+    "google-auth-library": "^11.3.1",
+    "helmet": "^8.3.0",
+    "nodemailer": "^10.1.7",
+    "otplib": "^12.0.1",
+    "qrcode": "^1.5.4"
+  }
+}

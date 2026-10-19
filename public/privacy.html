@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!-- Verzio: v2.0.0 - 2026-10-19 -->
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Adatvédelmi szabályzat - cYc</title>
+    <meta name="theme-color" content="#667eea">
+    <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <script src="/assets/js/theme-init.js"></script>
+    <script src="/assets/js/common.js" defer></script>
+</head>
+<body data-page="privacy">
+    <header id="siteHeader" class="header"></header>
+
+    <main class="main-content">
+        <div class="container">
+
+            <section class="card card-wide prose">
+                <h1 class="page-title">Adatvédelmi szabályzat</h1>
+                <div class="last-updated"><strong>Utolsó frissítés:</strong> 2026. október 19.</div>
+                <p>A cYc elkötelezett a személyes adataid védelme mellett. Ez a szabályzat leírja, milyen adatokat kezelünk, milyen célból, és milyen jogaid vannak.</p>
+
+                <h2>1. Fiók nélküli használat</h2>
+                <p>A kalkulátor regisztráció nélkül is használható. Ilyenkor személyes adatot nem tárolunk; a böngésződ helyi tárolójában (localStorage) csak a kényelmi beállításaid maradnak meg (téma, számformátum, utoljára használt pár).</p>
+                <p><strong>Technikai adatok:</strong> a szerver a működéshez és a visszaélések kiszűréséhez rövid ideig naplózhatja az IP-címet és a kérés idejét.</p>
+
+                <h2>2. Regisztrált felhasználók adatai</h2>
+                <ul>
+                    <li><strong>Fiókadatok:</strong> e-mail cím, (nem kötelező) megjelenített név, a jelszó egyirányú, argon2id algoritmussal készült lenyomata (a jelszót magát soha nem tároljuk).</li>
+                    <li><strong>Google bejelentkezésnél:</strong> a Google fiók azonosítója, e-mail címe és neve.</li>
+                    <li><strong>Kétlépcsős azonosítás:</strong> a hitelesítő kulcs titkosítva, a visszaállító kódok lenyomata.</li>
+                    <li><strong>Általad megadott adatok:</strong> kedvenc párok, portfólió-tételek, számítási előzmények (legfeljebb 500 db).</li>
+                    <li><strong>Biztonsági adatok:</strong> aktív munkamenetek (IP-cím, böngésző típusa), biztonsági eseménynapló (belépések, jelszócsere), amit 180 nap után automatikusan törlünk.</li>
+                </ul>
+
+                <h2>3. Az adatkezelés célja és jogalapja</h2>
+                <ul>
+                    <li>A fiókhoz kötött szolgáltatás nyújtása (szerződés teljesítése).</li>
+                    <li>A fiók és a szolgáltatás biztonsága, visszaélések megelőzése (jogos érdek).</li>
+                    <li>Rendszerüzenetek küldése: e-mail megerősítés, jelszó-visszaállítás, biztonsági értesítések. Hírlevelet nem küldünk.</li>
+                </ul>
+
+                <h2>4. Sütik (cookies)</h2>
+                <p>Csak egy, a bejelentkezéshez feltétlenül szükséges munkamenet-sütit használunk (HttpOnly, Secure, SameSite). Követő vagy reklám célú sütit nem használunk. Captcha és Google bejelentkezés esetén e szolgáltatók saját sütiket helyezhetnek el.</p>
+
+                <h2>5. Adatok megosztása, adatfeldolgozók</h2>
+                <p>Személyes adataidat nem adjuk el és nem adjuk át harmadik félnek, kivéve jogi kötelezettség esetén. A működéshez az alábbi szolgáltatásokat használjuk:</p>
+                <ul>
+                    <li>CoinGecko API és ExchangeRate-API – árfolyamok (ők nem kapnak rólad adatot, a lekérdezést a szerverünk végzi).</li>
+                    <li>Captcha szolgáltató (Cloudflare Turnstile / Google reCAPTCHA / hCaptcha) – robotszűrés az űrlapokon.</li>
+                    <li>Google Identity Services – ha Google-lel lépsz be.</li>
+                    <li>E-mail küldő szolgáltatás – rendszerüzenetek kézbesítése.</li>
+                </ul>
+
+                <h2>6. Adatbiztonság</h2>
+                <p>Titkosított kapcsolat (HTTPS), erős jelszó-lenyomat, titkosított 2FA-kulcsok, korlátozott próbálkozásszám és fiókzárolás, valamint szigorú böngésző-biztonsági fejlécek védik az adataidat. Egyetlen internetes rendszer sem 100%-ban biztonságos, ezért javasoljuk a 2FA bekapcsolását.</p>
+
+                <h2>7. Megőrzési idő</h2>
+                <p>Az adataidat a fiókod törléséig őrizzük. Törléskor a fiókod és minden hozzá tartozó adat azonnal és véglegesen törlődik.</p>
+
+                <h2>8. Gyermekek</h2>
+                <p>Szolgáltatásunk nem irányul 16 év alattiakra, és tudatosan nem kezelünk tőlük személyes adatot.</p>
+
+                <h2>9. Jogaid</h2>
+                <p>A GDPR alapján jogod van:</p>
+                <ul>
+                    <li>hozzáférni az adataidhoz és másolatot kérni róluk – a <a href="/account.html">Fiók</a> oldalon egy kattintással letöltheted őket (JSON);</li>
+                    <li>helyesbíteni a pontatlan adatokat;</li>
+                    <li>törölni a fiókodat és minden adatodat – szintén a Fiók oldalon;</li>
+                    <li>tiltakozni az adatkezelés ellen, illetve panaszt tenni a Nemzeti Adatvédelmi és Információszabadság Hatóságnál (NAIH).</li>
+                </ul>
+
+                <h2>10. Kapcsolat</h2>
+                <p>Kérdés esetén a <a href="/contact.html">Kapcsolat</a> oldalon vagy a <a href="https://github.com/LordAthis/cYc/issues" target="_blank" rel="noopener">GitHub Issues</a> felületen érsz el minket.</p>
+
+                <h2>11. Változások</h2>
+                <p>A szabályzatot módosíthatjuk; a változásokat ezen az oldalon tesszük közzé, a lényeges változásokról a regisztrált felhasználókat e-mailben értesítjük.</p>
+            </section>
+        </div>
+    </main>
+
+    <footer id="siteFooter" class="footer"></footer>
+</body>
+</html>

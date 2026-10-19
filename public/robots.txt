@@ -1,0 +1,5 @@
+# Verzio: v2.0.0 - 2026-10-19
+User-agent: *
+Disallow: /api/
+Disallow: /account.html
+Disallow: /dashboard.html

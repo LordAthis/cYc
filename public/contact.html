@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!-- Verzio: v2.0.0 - 2026-10-19 -->
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kapcsolat - cYc</title>
+    <meta name="theme-color" content="#667eea">
+    <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <script src="/assets/js/theme-init.js"></script>
+    <script src="/assets/js/common.js" defer></script>
+    <script src="/assets/js/contact.js" defer></script>
+</head>
+<body data-page="contact">
+    <header id="siteHeader" class="header"></header>
+
+    <main class="main-content">
+        <div class="container">
+
+            <section class="card card-medium prose">
+                <h1 class="page-title">Kapcsolat</h1>
+                <p>Kérdésed, javaslatod van, vagy hibát találtál? Írj nekünk!</p>
+                <div class="features">
+                    <div class="feature"><div class="feature-icon">💬</div><h3>Üzenet</h3><p>Az alábbi űrlappal. Partnerségek és üzleti megkeresések szintén itt.</p></div>
+                    <div class="feature"><div class="feature-icon">🐛</div><h3>Hibabejelentés</h3><p><a href="https://github.com/LordAthis/cYc/issues" target="_blank" rel="noopener">GitHub Issues</a></p></div>
+                </div>
+
+                <h2>Küldj üzenetet</h2>
+                <div class="alert" id="formAlert" role="alert"></div>
+                <form class="form" id="contactForm" novalidate>
+                    <div class="field"><label for="name">Név *</label><input class="input" id="name" maxlength="80" autocomplete="name" required></div>
+                    <div class="field"><label for="email">E-mail *</label><input class="input" type="email" id="email" autocomplete="email" required></div>
+                    <div class="field"><label for="subject">Tárgy *</label>
+                        <select class="select" id="subject" required>
+                            <option value="">Válassz témát</option>
+                            <option value="technical">Technikai támogatás</option>
+                            <option value="feature">Funkció kérés</option>
+                            <option value="bug">Hibabejelentés</option>
+                            <option value="business">Üzleti megkeresés</option>
+                            <option value="other">Egyéb</option>
+                        </select>
+                    </div>
+                    <div class="field"><label for="message">Üzenet *</label><textarea class="textarea" id="message" maxlength="5000" placeholder="Írd le részletesen a kérdésed..." required></textarea></div>
+                    <div class="captcha-box" id="captchaBox"></div>
+                    <div><button class="btn" type="submit">Üzenet küldése</button></div>
+                </form>
+
+                <p style="margin-top:1.5rem"><strong>Válaszidő:</strong> Munkanapokon igyekszünk minél hamarabb válaszolni. Sürgős technikai problémánál írd a tárgyba, hogy „SÜRGŐS”, vagy jelezd a <a href="https://github.com/LordAthis/cYc/issues" target="_blank" rel="noopener">GitHubon</a>.</p>
+                <p><strong>Adatvédelem:</strong> Az üzenetedet és az e-mail címedet csak a megválaszoláshoz használjuk, harmadik félnek nem adjuk át.</p>
+            </section>
+        </div>
+    </main>
+
+    <footer id="siteFooter" class="footer"></footer>
+</body>
+</html>
