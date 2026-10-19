@@ -1,4 +1,4 @@
-// Verzio: v2.0.0 - 2026-10-19
+// Verzio: v0.4.0 - 2026-10-19
 // A <head>-ben, szinkron fut: a téma még a kirajzolás előtt beáll (nincs fehér villanás sötét módban).
 (function () {
   var t = null;

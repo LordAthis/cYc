@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Verzio: v2.0.0 - 2026-10-19
+// Verzio: v0.4.0 - 2026-10-19
 // Online adatbázis-mentés (futó szerver mellett is biztonságos). A mentések a data/backups mappába kerülnek,
 // a 14 napnál régebbieket törli. Cron példa (naponta 3:15-kor):
 //   15 3 * * * cd /opt/cyc/server && /usr/bin/node scripts/backup.js >> data/backup.log 2>&1

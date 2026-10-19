@@ -1,4 +1,4 @@
-// Verzio: v2.0.0 - 2026-10-19
+// Verzio: v0.4.1 - 2026-10-19
 // Központi konfiguráció: minden beállítás a .env fájlból (vagy környezeti változóból) jön.
 // A program verziója EGYETLEN helyen van: server/package.json -> "version".
 'use strict';
@@ -25,6 +25,9 @@ function str(name, def = '') {
 }
 
 const isProd = str('NODE_ENV', 'development') === 'production';
+const appOrigin = str('APP_ORIGIN', 'http://localhost:3000').replace(/\/+$/, '');
+// IP-címes, domain nélküli üzemben sima HTTP: ilyenkor a süti nem lehet Secure (különben a böngésző eldobja)
+const isHttps = appOrigin.startsWith('https://');
 
 const config = {
   version: pkg.version,
@@ -32,7 +35,8 @@ const config = {
   port: int('PORT', 3000),
   host: str('HOST', '127.0.0.1'),
   // Nyilvános cím (séma + domain), pl. https://cyc.example.hu - e-mail linkekhez és Origin-ellenőrzéshez
-  appOrigin: str('APP_ORIGIN', 'http://localhost:3000').replace(/\/+$/, ''),
+  appOrigin,
+  isHttps,
   // Nginx mögött 1 (egy proxy-ugrás), hogy a valós kliens IP-t lássuk
   trustProxy: int('TRUST_PROXY', isProd ? 1 : 0),
 
@@ -45,9 +49,9 @@ const config = {
 
   session: {
     // A __Host- előtag csak Secure sütivel érvényes, ezért a név ehhez igazodik
-    cookieName: str('SESSION_COOKIE', bool('COOKIE_SECURE', isProd) ? '__Host-cyc_sid' : 'cyc_sid'),
+    cookieName: str('SESSION_COOKIE', bool('COOKIE_SECURE', isHttps) ? '__Host-cyc_sid' : 'cyc_sid'),
     days: int('SESSION_DAYS', 30),
-    secureCookie: bool('COOKIE_SECURE', isProd),
+    secureCookie: bool('COOKIE_SECURE', isHttps),
   },
 
   registrationEnabled: bool('REGISTRATION_ENABLED', true),

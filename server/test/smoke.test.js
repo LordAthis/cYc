@@ -1,4 +1,4 @@
-// Verzio: v2.0.0 - 2026-10-19
+// Verzio: v0.4.0 - 2026-10-19
 // Füstteszt a teljes folyamatra: regisztráció -> megerősítés -> belépés -> 2FA -> adatok ->
 // rejtett felület (404 / engedélyezés után 200) -> admin -> jelszó-visszaállítás -> törlés.
 // Futtatás: npm test   (internet nem kell: kitalált árfolyamokkal fut)

@@ -1,4 +1,4 @@
-// Verzio: v2.0.0 - 2026-10-19
+// Verzio: v0.4.0 - 2026-10-19
 // Kétlépcsős azonosítás (TOTP, RFC 6238) + egyszer használatos visszaállító kódok.
 'use strict';
 

@@ -1,4 +1,4 @@
-// Verzio: v2.0.0 - 2026-10-19
+// Verzio: v0.4.0 - 2026-10-19
 // Admin panel: felhasználók kezelése (rejtett felület egyedi engedélyezése, tiltás, szerepkör), napló.
 (function () {
   'use strict';

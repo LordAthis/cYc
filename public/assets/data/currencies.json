@@ -1,0 +1,101 @@
+{
+  "listVersion": "v0.4.1",
+  "listUpdated": "2026-10-19",
+  "crypto": [
+    {
+      "code": "BTC",
+      "name": "Bitcoin",
+      "cg": "bitcoin",
+      "decimals": 8
+    },
+    {
+      "code": "ETH",
+      "name": "Ethereum",
+      "cg": "ethereum",
+      "decimals": 8
+    },
+    {
+      "code": "SOL",
+      "name": "Solana",
+      "cg": "solana",
+      "decimals": 6
+    },
+    {
+      "code": "BNB",
+      "name": "BNB",
+      "cg": "binancecoin",
+      "decimals": 6
+    },
+    {
+      "code": "XRP",
+      "name": "XRP",
+      "cg": "ripple",
+      "decimals": 4
+    },
+    {
+      "code": "ADA",
+      "name": "Cardano",
+      "cg": "cardano",
+      "decimals": 4
+    },
+    {
+      "code": "DOGE",
+      "name": "Dogecoin",
+      "cg": "dogecoin",
+      "decimals": 4
+    },
+    {
+      "code": "TRX",
+      "name": "TRON",
+      "cg": "tron",
+      "decimals": 4
+    },
+    {
+      "code": "LTC",
+      "name": "Litecoin",
+      "cg": "litecoin",
+      "decimals": 6
+    },
+    {
+      "code": "USDC",
+      "name": "USD Coin",
+      "cg": "usd-coin",
+      "decimals": 2,
+      "stable": true
+    },
+    {
+      "code": "USDT",
+      "name": "Tether",
+      "cg": "tether",
+      "decimals": 2,
+      "stable": true
+    }
+  ],
+  "fiat": [
+    {
+      "code": "USD",
+      "name": "Amerikai dollár",
+      "decimals": 2
+    },
+    {
+      "code": "EUR",
+      "name": "Euró",
+      "decimals": 2
+    },
+    {
+      "code": "HUF",
+      "name": "Magyar forint",
+      "decimals": 0
+    },
+    {
+      "code": "GBP",
+      "name": "Angol font",
+      "decimals": 2
+    },
+    {
+      "code": "CHF",
+      "name": "Svájci frank",
+      "decimals": 2
+    }
+  ]
+}

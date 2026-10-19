@@ -1,4 +1,4 @@
-// Verzio: v2.0.0 - 2026-10-19
+// Verzio: v0.4.0 - 2026-10-19
 // Fiók és biztonság: profil, jelszó, kétlépcsős azonosítás (TOTP), Google összekapcsolás,
 // aktív munkamenetek, adatexport, fióktörlés.
 (function () {

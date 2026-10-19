@@ -1,4 +1,4 @@
-// Verzio: v2.0.0 - 2026-10-19
+// Verzio: v0.4.0 - 2026-10-19
 // Saját, adatbázis-alapú munkamenet-kezelés + CSRF-védelem + jogosultság-ellenőrző middleware-ek.
 // A sütiben csak egy véletlen azonosító van; az adatbázisban ennek SHA-256 hash-e tárolódik.
 'use strict';

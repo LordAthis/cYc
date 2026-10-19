@@ -1,4 +1,4 @@
-// Verzio: v2.0.0 - 2026-10-19
+// Verzio: v0.4.0 - 2026-10-19
 // Kriptográfiai segédfüggvények: tokenek, hash, jelszó (argon2id), 2FA-titok titkosítás.
 'use strict';
 

@@ -1,4 +1,4 @@
-// Verzio: v2.0.0 - 2026-10-19
+// Verzio: v0.4.0 - 2026-10-19
 // Árfolyamok szerveroldali lekérése és gyorsítótárazása.
 // Minden ár USD-ben tárolódik (usd[code] = 1 egység ára dollárban), így bármely pár
 // egyetlen osztással számolható, és a kliensek nem terhelik közvetlenül a CoinGecko-t.

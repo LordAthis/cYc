@@ -1,4 +1,4 @@
-// Verzio: v2.0.0 - 2026-10-19
+// Verzio: v0.4.0 - 2026-10-19
 // Fiókbeállítások: profil, jelszó, 2FA be/ki, visszaállító kódok, Google összekapcsolás,
 // munkamenetek, adatexport (GDPR), fióktörlés.
 'use strict';

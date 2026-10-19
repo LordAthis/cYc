@@ -1,4 +1,4 @@
-// Verzio: v2.0.0 - 2026-10-19
+// Verzio: v0.4.0 - 2026-10-19
 // Captcha ellenőrzés szerveroldalon: Cloudflare Turnstile, Google reCAPTCHA v2 vagy hCaptcha.
 'use strict';
 

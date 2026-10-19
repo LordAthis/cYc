@@ -1,10 +1,41 @@
-# Verzio: v2.0.0 - 2026-10-19
+# Verzio: v0.4.1 - 2026-10-19
+# FONTOS: az elo szerveren ugyanebben a mappaban mas (nem kovetett) fajlok is lehetnek.
+# A masik, rejtett utvonalon futo weboldal mappajat NE ide ird (a neve igy a repoba kerulne),
+# hanem a szerveren helyben: echo "/<mappanev>/" >> .git/info/exclude
+# Az elo szerveren SOHA ne futtass "git clean"-t es "git add -A"-t!
+
+# Fuggosegek
 node_modules/
-server/.env
+
+# Titkok es beallitasok (csak a minta kerul a repoba)
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Futasi adatok: adatbazis, mentesek, naplok
 server/data/
 *.sqlite
 *.sqlite-wal
 *.sqlite-shm
+*.db
+backups/
+*.bak
 *.log
+npm-debug.log*
+
+# Helyi segedanyagok
+tools/
+*.zip
+*.tmp
+
+# Rendszer- es szerkesztofajlok
 .DS_Store
 Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*~

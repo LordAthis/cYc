@@ -1,10 +1,13 @@
-// Verzio: v2.0.0 - 2026-10-19
+// Verzio: v0.4.1 - 2026-10-19
 // Közös kliensoldali modul minden oldalra: fejléc/lábléc, téma, API-hívások CSRF-fel,
 // bejelentkezési állapot, captcha és Google gomb betöltése, számformázás, értesítések.
+// KOMPATIBILIS MÓD: ha nincs Node szerver mögötte (sima statikus kiszolgálás), state.backend = false,
+// ilyenkor a fiókos funkciók rejtve maradnak, a kalkulátor pedig közvetlenül kéri le az árfolyamokat.
+// Minden belső hivatkozás relatív, így az oldal a gyökérből és a /public/ alól is működik.
 (function () {
   'use strict';
 
-  const state = { config: null, user: null, csrf: null, mfaPending: false, links: {} };
+  const state = { config: null, user: null, csrf: null, mfaPending: false, links: {}, backend: false };
 
   // --- Segédek -------------------------------------------------------------
   const $ = (sel, root = document) => root.querySelector(sel);
@@ -118,10 +121,10 @@
       header.innerHTML = '';
       header.append(h('div', { class: 'container' },
         h('div', { class: 'header-content' },
-          h('a', { href: '/', class: 'logo' }, 'cYc ', h('small', {}, '- CryptoCalc')),
+          h('a', { href: './', class: 'logo' }, 'cYc ', h('small', {}, '- CryptoCalc')),
           h('nav', { class: 'nav', 'aria-label': 'Fő navigáció' },
-            h('a', { href: '/', class: 'nav-link' + (page === 'calc' ? ' active' : '') }, 'Kalkulátor'),
-            h('a', { href: '/about.html', class: 'nav-link' + (page === 'about' ? ' active' : '') }, 'Rólunk'),
+            h('a', { href: './', class: 'nav-link' + (page === 'calc' ? ' active' : '') }, 'Kalkulátor'),
+            h('a', { href: 'about.html', class: 'nav-link' + (page === 'about' ? ' active' : '') }, 'Rólunk'),
             h('button', { class: 'glass-btn icon-btn', id: 'themeToggle', type: 'button', 'aria-label': 'Téma váltása',
               onclick: () => setTheme(currentTheme() === 'dark' ? 'light' : 'dark') }),
             h('div', { id: 'authArea' })
@@ -136,10 +139,10 @@
       footer.innerHTML = '';
       footer.append(h('div', { class: 'container' },
         h('div', { class: 'footer-content' },
-          h('a', { href: '/about.html', class: 'footer-link' }, 'Rólunk'),
-          h('a', { href: '/contact.html', class: 'footer-link' }, 'Kapcsolat'),
-          h('a', { href: '/privacy.html', class: 'footer-link' }, 'Adatvédelem'),
-          h('a', { href: '/terms.html', class: 'footer-link' }, 'Felhasználási feltételek')
+          h('a', { href: 'about.html', class: 'footer-link' }, 'Rólunk'),
+          h('a', { href: 'contact.html', class: 'footer-link' }, 'Kapcsolat'),
+          h('a', { href: 'privacy.html', class: 'footer-link' }, 'Adatvédelem'),
+          h('a', { href: 'terms.html', class: 'footer-link' }, 'Felhasználási feltételek')
         ),
         h('div', { class: 'footer-version', id: 'footerVersion' })
       ));
@@ -150,6 +153,7 @@
     const area = $('#authArea');
     if (!area) return;
     area.innerHTML = '';
+    if (!state.backend) return; // statikus módban nincs fiókkezelés, a gomb sem jelenik meg
     if (!state.user) {
       const next = encodeURIComponent(location.pathname + location.search);
       const onAuthPage = ['login', 'register'].includes(document.body.dataset.page);
@@ -350,6 +354,7 @@
 
   // Bejelentkezést igénylő oldalakon
   function requireLogin() {
+    if (!state.backend) return false;
     if (!state.user) {
       location.replace('/login.html?next=' + encodeURIComponent(location.pathname + location.search));
       return false;
@@ -358,17 +363,33 @@
   }
 
   // --- Indítás ------------------------------------------------------------------------
+  // Fiókot igénylő oldal (data-backend="required") statikus módban: érthető üzenet a tartalom helyett
+  function showBackendMissing() {
+    const main = $('main .container');
+    if (!main) return;
+    main.replaceChildren(h('section', { class: 'card card-narrow' },
+      h('h1', { class: 'page-title' }, 'Hamarosan'),
+      h('p', {}, 'A fiókkal kapcsolatos funkciók jelenleg nem érhetők el. A kalkulátor addig is szabadon használható.'),
+      h('p', { style: 'margin-top:1rem' }, h('a', { class: 'btn', href: './' }, 'Vissza a kalkulátorhoz'))));
+  }
+
   const ready = (async () => {
     if (document.readyState === 'loading') await new Promise((r) => document.addEventListener('DOMContentLoaded', r, { once: true }));
     renderShell();
     attachPasswordToggles();
     try {
-      const [cfg] = await Promise.all([api('GET', '/api/config'), refreshMe()]);
-      state.config = cfg;
+      state.config = await api('GET', '/api/config');
+      state.backend = true;
       const fv = $('#footerVersion');
-      if (fv) fv.textContent = `cYc v${cfg.version}`;
+      if (fv) fv.textContent = `cYc v${state.config.version}`;
+      await refreshMe();
     } catch (e) {
-      state.config = state.config || { captcha: { provider: 'none' }, googleClientId: null, registrationEnabled: true, passwordMinLength: 10 };
+      if (!state.config) {
+        // Nincs Node szerver (statikus kompatibilis mód)
+        state.backend = false;
+        state.config = { captcha: { provider: 'none' }, googleClientId: null, registrationEnabled: false, passwordMinLength: 10, contactEnabled: false };
+        if (document.body.dataset.backend === 'required') showBackendMissing();
+      }
       renderAuthArea();
     }
     return state;

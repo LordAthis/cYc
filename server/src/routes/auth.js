@@ -1,4 +1,4 @@
-// Verzio: v2.0.0 - 2026-10-19
+// Verzio: v0.4.0 - 2026-10-19
 // Regisztráció, e-mail megerősítés, bejelentkezés (jelszó + captcha, Google), 2FA lépés,
 // kijelentkezés, elfelejtett jelszó.
 'use strict';

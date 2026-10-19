@@ -1,5 +1,6 @@
-# Verzio: v2.0.0 - 2026-10-19
-# systemd szolgaltatas a cYc szerverhez.
+# Verzio: v0.4.1 - 2026-10-19
+# systemd szolgaltatas a cYc szerverhez. MINTA: a User/Group, WorkingDirectory es ReadWritePaths
+# sorokat a meglevo cYc klon helyehez es a futtato felhasznalohoz kell igazitani.
 # Telepites:  sudo cp deploy/cyc.service /etc/systemd/system/cyc.service
 #             sudo systemctl daemon-reload && sudo systemctl enable --now cyc
 # Naplo:      journalctl -u cyc -f

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Verzio: v2.0.0 - 2026-10-19 -->
+<!-- Verzio: v0.4.1 - 2026-10-19 -->
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
@@ -7,13 +7,13 @@
     <title>Regisztráció - cYc</title>
     <meta name="robots" content="noindex">
     <meta name="theme-color" content="#667eea">
-    <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="/assets/css/app.css">
-    <script src="/assets/js/theme-init.js"></script>
-    <script src="/assets/js/common.js" defer></script>
-    <script src="/assets/js/auth-pages.js" defer></script>
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <script src="assets/js/theme-init.js"></script>
+    <script src="assets/js/common.js" defer></script>
+    <script src="assets/js/auth-pages.js" defer></script>
 </head>
-<body data-page="register">
+<body data-page="register" data-backend="required">
     <header id="siteHeader" class="header"></header>
 
     <main class="main-content center">
@@ -49,8 +49,8 @@
                     </div>
                     <label class="check">
                         <input type="checkbox" id="acceptTerms" required>
-                        <span>Elfogadom a <a href="/terms.html" target="_blank">felhasználási feltételeket</a> és az
-                        <a href="/privacy.html" target="_blank">adatvédelmi szabályzatot</a>.</span>
+                        <span>Elfogadom a <a href="terms.html" target="_blank">felhasználási feltételeket</a> és az
+                        <a href="privacy.html" target="_blank">adatvédelmi szabályzatot</a>.</span>
                     </label>
                     <div class="captcha-box" id="captchaBox"></div>
                     <button class="btn btn-block" type="submit">Fiók létrehozása</button>
@@ -59,14 +59,14 @@
                     <div class="divider">vagy</div>
                     <div class="google-box" id="googleBox"></div>
                 </div>
-                <div class="form-footer"><p>Már van fiókod? <a href="/login.html">Bejelentkezés</a></p></div>
+                <div class="form-footer"><p>Már van fiókod? <a href="login.html">Bejelentkezés</a></p></div>
             </section>
             <dialog class="modal" id="termsDialog">
                 <form method="dialog" class="form">
                     <h2 class="section-title">Új fiók létrehozása</h2>
                     <p>Ehhez a Google fiókhoz még nem tartozik cYc fiók. A létrehozáshoz el kell fogadnod a
-                       <a href="/terms.html" target="_blank">felhasználási feltételeket</a> és az
-                       <a href="/privacy.html" target="_blank">adatvédelmi szabályzatot</a>.</p>
+                       <a href="terms.html" target="_blank">felhasználási feltételeket</a> és az
+                       <a href="privacy.html" target="_blank">adatvédelmi szabályzatot</a>.</p>
                     <div class="btn-row">
                         <button class="btn" value="yes">Elfogadom, létrehozom</button>
                         <button class="btn btn-secondary" value="no">Mégse</button>

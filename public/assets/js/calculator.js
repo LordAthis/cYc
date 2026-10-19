@@ -1,6 +1,8 @@
-// Verzio: v2.0.0 - 2026-10-19
+// Verzio: v0.4.1 - 2026-10-19
 // Árfolyam-kalkulátor: szerveroldali árfolyamokkal, kedvenc párokkal, automatikus előzménnyel,
 // megosztható URL-lel (?from=BTC&to=HUF&amount=1) és állítható számformátummal.
+// Kompatibilis mód: ha a szerver /api/rates végpontja nem érhető el (nincs Node), a böngésző maga kéri le
+// az árfolyamokat a CoinGecko-tól és az ExchangeRate-API-tól - úgy, ahogy a v0.3 verzió tette.
 (function () {
   'use strict';
   const C = window.cYc;
@@ -62,10 +64,49 @@
     history.replaceState(null, '', '?' + q.toString());
   }
 
+  // Kliensoldali tartalék: ugyanolyan szerkezetű adatot állít elő, mint az /api/rates
+  let currencyList = null;
+  async function fetchJson(url) {
+    const r = await fetch(url, { headers: { accept: 'application/json' } });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  }
+  async function clientRates() {
+    if (!currencyList) currencyList = await fetchJson('assets/data/currencies.json');
+    const { crypto, fiat } = currencyList;
+    const usd = { USD: 1 };
+    const change24h = {};
+    const prev = rates ? rates.usd : {};
+    const [fx, cg] = await Promise.allSettled([
+      fetchJson('https://open.er-api.com/v6/latest/USD').catch(() => fetchJson('https://api.exchangerate-api.com/v4/latest/USD')),
+      fetchJson(`https://api.coingecko.com/api/v3/simple/price?ids=${crypto.map((c) => c.cg).join(',')}&vs_currencies=usd&include_24hr_change=true`),
+    ]);
+    if (fx.status === 'fulfilled') for (const f of fiat) if (f.code !== 'USD' && fx.value.rates[f.code]) usd[f.code] = 1 / fx.value.rates[f.code];
+    if (cg.status === 'fulfilled') {
+      for (const c of crypto) {
+        const row = cg.value[c.cg];
+        if (row && typeof row.usd === 'number') usd[c.code] = row.usd;
+        if (row && typeof row.usd_24h_change === 'number') change24h[c.code] = row.usd_24h_change;
+      }
+    }
+    for (const k of Object.keys(prev)) if (usd[k] === undefined) usd[k] = prev[k];
+    if (Object.keys(usd).length <= 1) throw new Error('Nincs elérhető árfolyam');
+    return {
+      usd, change24h, updatedAt: Date.now(), stale: false,
+      partial: fx.status !== 'fulfilled' || cg.status !== 'fulfilled',
+      currencies: { crypto: crypto.map(({ cg: _cg, ...c }) => c), fiat },
+    };
+  }
+
   async function loadRates(manual) {
     showLoading(true);
     try {
-      const r = await C.api('GET', '/api/rates');
+      let r;
+      if (C.state.backend) {
+        try { r = await C.api('GET', '/api/rates'); } catch { r = await clientRates(); }
+      } else {
+        r = await clientRates();
+      }
       const first = !rates;
       rates = r;
       if (first) { fillSelects(); restoreSelection(); }
@@ -270,6 +311,7 @@
     updateFormatButton();
 
     await C.ready;
+    if (!C.state.backend) el.favBtn.hidden = true; // statikus módban nincs fiók, így kedvenc sem
     await loadRates(false);
     await loadFavorites();
     updateFavButton();

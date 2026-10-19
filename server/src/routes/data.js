@@ -1,4 +1,4 @@
-// Verzio: v2.0.0 - 2026-10-19
+// Verzio: v0.4.0 - 2026-10-19
 // Felhasználói adatok (eszközök között szinkronban): kedvenc párok, portfólió, előzmények.
 'use strict';
 

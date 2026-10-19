@@ -1,4 +1,4 @@
-// Verzio: v2.0.0 - 2026-10-19
+// Verzio: v0.4.0 - 2026-10-19
 // Kapcsolati űrlap: captchával védve, a szerver e-mailben továbbítja (CONTACT_TO).
 (function () {
   'use strict';

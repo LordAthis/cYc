@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Verzio: v2.0.0 - 2026-10-19
+// Verzio: v0.4.0 - 2026-10-19
 // Parancssori kezelő a VPS-en (az első admin kinevezéséhez és vészhelyzetre).
 // Használat:
 //   node scripts/cyc-admin.js list

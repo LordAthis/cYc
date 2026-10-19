@@ -1,4 +1,4 @@
-// Verzio: v2.0.0 - 2026-10-19
+// Verzio: v0.4.0 - 2026-10-19
 // Bejelentkezés, regisztráció, e-mail megerősítés, elfelejtett jelszó és új jelszó oldalak logikája.
 // Az aktuális oldalt a <body data-page="..."> dönti el.
 (function () {

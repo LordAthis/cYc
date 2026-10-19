@@ -1,4 +1,4 @@
-// Verzio: v2.0.0 - 2026-10-19
+// Verzio: v0.4.1 - 2026-10-19
 // cYc szerver belépési pontja: biztonsági fejlécek, munkamenet, API-k, statikus oldalak,
 // valamint a csak jogosultaknak létező rejtett felület és admin panel.
 'use strict';
@@ -40,16 +40,18 @@ app.use(helmet({
       'script-src': ["'self'", ...googleHosts.map((h) => h + 'client'), ...captchaHosts],
       'style-src': ["'self'", "'unsafe-inline'", ...googleHosts.map((h) => h + 'style'), ...captchaHosts],
       'img-src': ["'self'", 'data:', 'https://*.googleusercontent.com'],
-      'connect-src': ["'self'", ...googleHosts, ...captchaHosts],
+      // Az árfolyam-szolgáltatók a kliensoldali tartalék módhoz (ha az /api/rates nem válaszol)
+      'connect-src': ["'self'", 'https://api.coingecko.com', 'https://open.er-api.com', 'https://api.exchangerate-api.com', ...googleHosts, ...captchaHosts],
       'frame-src': [...googleHosts, ...captchaHosts],
       'form-action': ["'self'"],
       'frame-ancestors': ["'none'"],
-      'upgrade-insecure-requests': config.isProd ? [] : null,
+      // Csak HTTPS-es címnél; IP-címes, sima HTTP-s üzemben ez minden erőforrást eltörne
+      'upgrade-insecure-requests': config.isHttps ? [] : null,
     },
   },
   crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' }, // Google bejelentkezési ablakhoz
   crossOriginEmbedderPolicy: false,
-  strictTransportSecurity: config.isProd ? { maxAge: 31536000, includeSubDomains: true } : false,
+  strictTransportSecurity: config.isHttps ? { maxAge: 31536000 } : false,
   referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
 }));
 app.use((req, res, next) => {
@@ -185,7 +187,10 @@ if (!fs.existsSync(path.join(hiddenDir, 'index.html'))) {
 if (require.main === module) {
   app.listen(config.port, config.host, () => {
     console.log(`[cYc] v${config.version} fut: http://${config.host}:${config.port}  (nyilvanos cim: ${config.appOrigin})`);
-    console.log(`[cYc] Captcha: ${config.captcha.provider} | Google: ${config.google.clientId ? 'be' : 'ki'} | SMTP: ${mailer.hasSmtp() ? 'be' : 'ki (konzolra ir)'}`);
+    console.log(`[cYc] Captcha: ${config.captcha.provider} | Google: ${config.google.clientId ? 'be' : 'ki'} | SMTP: ${mailer.hasSmtp() ? 'be' : 'ki (konzolra ir)'} | ${config.isHttps ? 'HTTPS' : 'HTTP mod (IP-cim)'}`);
+    if (!config.isHttps && config.google.clientId) {
+      console.warn('[cYc] Figyelem: a Google bejelentkezes csak HTTPS-es domainen mukodik, IP-cimen/HTTP-n nem.');
+    }
   });
 }
 

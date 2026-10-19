@@ -1,4 +1,4 @@
-// Verzio: v2.0.0 - 2026-10-19
+// Verzio: v0.4.0 - 2026-10-19
 // Irányítópult: portfólió (saját kripto-állomány értéke), kedvenc párok élő árfolyammal, előzmények.
 // Minden adat a szerveren van, így minden eszközön ugyanaz látszik.
 (function () {
