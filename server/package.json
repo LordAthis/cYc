@@ -1,6 +1,6 @@
 {
   "name": "cyc-server",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "cYc - Crypto Calculator szerver (Express + SQLite): arfolyamok, fiokok, 2FA, portfolio",
   "private": true,
   "main": "src/server.js",

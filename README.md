@@ -1,7 +1,7 @@
-<!-- Verzio: v0.4.1 - 2026-10-19 -->
+<!-- Verzio: v0.4.2 - 2026-10-20 -->
 # cYc – Crypto Calculator
 
-**Aktuális verzió: v0.4.1** (2026-10-19)
+**Aktuális verzió: v0.4.2** (2026-10-20)
 
 Valós idejű kripto- és deviza-árfolyam kalkulátor saját szerverrel, felhasználói fiókokkal,
 eszközök között szinkronizált kedvencekkel/portfólióval/előzményekkel, és egyedileg engedélyezhető
@@ -13,6 +13,7 @@ Verziózás: 1.0 előtt vagyunk (az élő oldal még átállás alatt). Javítá
 
 | Verzió | Dátum | Lényeg |
 |---|---|---|
+| v0.4.2 | 2026-10-20 | A 404-es oldal ismét az eredeti, teljes minőségű képet (404_001.png) használja; a kép a régi és az új kiszolgálási módban is megjelenik. |
 | v0.4.1 | 2026-10-19 | Kompatibilis mód az élő szerverhez: a weboldal Node nélkül, statikusan is működik (a kalkulátor a böngészőből kéri az árfolyamot), a régi címek átirányítanak a `public/` mappába, IP-címes HTTP-üzem (süti, biztonsági fejlécek), biztonságos frissítő (`deploy/update.sh`) és csak olvasó diagnosztika (`deploy/diagnose.sh`), szigorúbb `.gitignore`. |
 | v0.4.0 | 2026-10-19 | (A GitHub commit üzenetében tévesen „v2.0.0” szerepel.) Saját Node.js szerver (VPS). Regisztráció és belépés e-maillel + jelszóval, captchával, Google-lel; kapcsolható 2FA visszaállító kódokkal. Kedvencek, portfólió, előzmények. Rejtett belső felület és admin panel. Sötét mód, új kriptók és devizák, árfolyam-gyorsítótár, működő kapcsolati űrlap, frissített adatvédelmi szabályzat. Kalkulátor-hibák javítva (pl. HUF→USD „0,00”). |
 | v0.3 | 2025-07 | Az eredeti, élesben futó statikus HTML kalkulátor (BTC, ETH, SOL, BNB, TRX, USDC, USDT ↔ USD, EUR, HUF), jogi oldalak, 404-es oldal. |
