@@ -1,4 +1,4 @@
-/* Verzio: v0.4.0 - 2026-10-19
+/* Verzio: v0.4.3 - 2026-11-09
    cYc közös stíluslap. Világos és sötét téma CSS-változókkal; a téma a <html data-theme> attribútumból jön
    (theme-init.js állítja be a rendszerbeállítás vagy a felhasználó választása alapján). */
 
@@ -342,11 +342,20 @@ dialog.modal { border: 0; border-radius: var(--radius); padding: 1.6rem; backgro
 dialog.modal::backdrop { background: rgba(0, 0, 0, 0.55); }
 
 /* --- Lábléc ------------------------------------------------------------------ */
-.footer { background: var(--glass); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 1.6rem 0; border-top: 1px solid var(--glass-border); }
+.footer { position: relative; background: var(--glass); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 1.6rem 0; border-top: 1px solid var(--glass-border); }
 .footer-content { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
 .footer-link { color: var(--on-glass); text-decoration: none; transition: color 0.2s; }
 .footer-link:hover { color: #fff; }
-.footer-version { text-align: center; color: var(--on-glass); opacity: 0.6; font-size: 0.78rem; margin-top: 0.8rem; }
+.footer-version { position: absolute; left: 1.2rem; top: 50%; transform: translateY(-50%); color: var(--on-glass); opacity: 0.6; font-size: 0.82rem; text-decoration: none; white-space: nowrap; }
+.footer-version:hover { opacity: 1; color: #fff; }
+
+/* Verziótörténet (Rólunk oldal) */
+.changelog { list-style: none; padding: 0; margin: 0.5rem 0 0; }
+.changelog-entry { border-left: 3px solid var(--glass-border); padding: 0.2rem 0 0.2rem 1rem; margin-bottom: 1rem; }
+.changelog-entry:first-child { border-left-color: #667eea; }
+.changelog-entry h3 { margin: 0 0 0.3rem; font-size: 1rem; }
+.changelog-entry h3 small { font-weight: normal; color: var(--muted); margin-left: 0.5rem; }
+.changelog-entry ul { margin: 0; padding-left: 1.2rem; }
 
 /* --- Reszponzív ----------------------------------------------------------------- */
 @media (max-width: 768px) {
@@ -366,6 +375,7 @@ dialog.modal::backdrop { background: rgba(0, 0, 0, 0.55); }
   .container { padding: 0 12px; }
   .card { padding: 1.1rem; border-radius: 16px; }
   .footer-content { flex-direction: column; gap: 0.7rem; text-align: center; }
+  .footer-version { position: static; transform: none; display: block; text-align: center; margin-top: 0.9rem; }
   .user-name-short { display: none; }
   .codes-grid { grid-template-columns: 1fr; }
 }

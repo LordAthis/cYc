@@ -1,0 +1,47 @@
+{
+  "_megjegyzes": "Verzio: v0.4.3 - 2026-11-09. NYILVANOS valtozasnaplo (a Rolunk oldal es a lablec olvassa). Csak publikus valtozas kerulhet ide! Az elso elem verzioja = server/package.json version (a teszt ellenorzi).",
+  "versions": [
+    {
+      "version": "0.4.3",
+      "date": "2026-11-09",
+      "items": [
+        "A láblécben megjelenik az oldal aktuális verziószáma.",
+        "A Rólunk oldal aljára került ez a verziótörténet.",
+        "Biztonsági frissítés az egyik szerveroldali összetevőben."
+      ]
+    },
+    {
+      "version": "0.4.2",
+      "date": "2026-10-20",
+      "items": [
+        "A 404-es (nem található) oldal ismét az eredeti, teljes minőségű képet mutatja."
+      ]
+    },
+    {
+      "version": "0.4.1",
+      "date": "2026-10-19",
+      "items": [
+        "Megbízhatóbb működés: a kalkulátor közvetlenül a böngészőből kéri le az árfolyamokat.",
+        "A korábbi oldalcímek (könyvjelzők) továbbra is működnek."
+      ]
+    },
+    {
+      "version": "0.4.0",
+      "date": "2026-10-19",
+      "items": [
+        "Megújult felület, világos és sötét téma.",
+        "Új kriptovaluták (XRP, Cardano, Dogecoin, Litecoin) és devizák (angol font, svájci frank).",
+        "24 órás árváltozás a kriptóknál, választható számformátum (1'234,56 vagy 1 234.56).",
+        "Eredmény másolása egy kattintással, megosztható link a kiválasztott párral.",
+        "Javítva: kis értékű átváltásoknál (pl. HUF → USD) az eredmény már nem „0,00”."
+      ]
+    },
+    {
+      "version": "0.3",
+      "date": "2025-07",
+      "items": [
+        "Az első nyilvános kiadás: BTC, ETH, SOL, BNB, TRX, USDC, USDT átváltása USD, EUR és HUF pénznemre."
+      ]
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-// Verzio: v0.4.1 - 2026-10-19
+// Verzio: v0.4.3 - 2026-11-09
 // Közös kliensoldali modul minden oldalra: fejléc/lábléc, téma, API-hívások CSRF-fel,
 // bejelentkezési állapot, captcha és Google gomb betöltése, számformázás, értesítések.
 // KOMPATIBILIS MÓD: ha nincs Node szerver mögötte (sima statikus kiszolgálás), state.backend = false,
@@ -144,7 +144,7 @@
           h('a', { href: 'privacy.html', class: 'footer-link' }, 'Adatvédelem'),
           h('a', { href: 'terms.html', class: 'footer-link' }, 'Felhasználási feltételek')
         ),
-        h('div', { class: 'footer-version', id: 'footerVersion' })
+        h('a', { class: 'footer-version', id: 'footerVersion', href: 'about.html#verziotortenet', title: 'Verziótörténet' })
       ));
     }
   }
@@ -373,6 +373,22 @@
       h('p', { style: 'margin-top:1rem' }, h('a', { class: 'btn', href: './' }, 'Vissza a kalkulátorhoz'))));
   }
 
+  // Nyilvános változásnapló (assets/data/changelog.json) - a Rólunk oldal és a lábléc használja
+  let changelogPromise = null;
+  function loadChangelog() {
+    if (!changelogPromise) {
+      changelogPromise = fetch('assets/data/changelog.json', { cache: 'no-cache' })
+        .then((r) => { if (!r.ok) throw new Error('changelog ' + r.status); return r.json(); });
+      changelogPromise.catch(() => { changelogPromise = null; });
+    }
+    return changelogPromise;
+  }
+
+  function showVersion(v) {
+    const fv = $('#footerVersion');
+    if (fv && v) fv.textContent = `cYc v${v}`;
+  }
+
   const ready = (async () => {
     if (document.readyState === 'loading') await new Promise((r) => document.addEventListener('DOMContentLoaded', r, { once: true }));
     renderShell();
@@ -380,8 +396,7 @@
     try {
       state.config = await api('GET', '/api/config');
       state.backend = true;
-      const fv = $('#footerVersion');
-      if (fv) fv.textContent = `cYc v${state.config.version}`;
+      showVersion(state.config.version);
       await refreshMe();
     } catch (e) {
       if (!state.config) {
@@ -391,13 +406,15 @@
         if (document.body.dataset.backend === 'required') showBackendMissing();
       }
       renderAuthArea();
+      // Statikus módban a verzió a nyilvános változásnaplóból jön (első elem = aktuális verzió)
+      loadChangelog().then((c) => showVersion(c.versions[0].version)).catch(() => {});
     }
     return state;
   })();
 
   window.cYc = {
     state, ready, api, ApiError, refreshMe, toast, showAlert, hideAlert, busy, h, $, $$,
-    storageGet, storageSet, mountCaptcha, mountGoogleButton, formatNumber, parseNumber, decimalsFor,
+    storageGet, storageSet, loadChangelog, mountCaptcha, mountGoogleButton, formatNumber, parseNumber, decimalsFor,
     formatDate, attachPasswordMeter, attachPasswordToggles, safeNext, requireLogin, fmtPrefs, currentTheme,
   };
 })();

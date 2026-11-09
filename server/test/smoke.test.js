@@ -1,4 +1,4 @@
-// Verzio: v0.4.0 - 2026-10-19
+// Verzio: v0.4.3 - 2026-11-09
 // Füstteszt a teljes folyamatra: regisztráció -> megerősítés -> belépés -> 2FA -> adatok ->
 // rejtett felület (404 / engedélyezés után 200) -> admin -> jelszó-visszaállítás -> törlés.
 // Futtatás: npm test   (internet nem kell: kitalált árfolyamokkal fut)
@@ -252,4 +252,12 @@ test('teljes folyamat', async () => {
   r = await c.req('DELETE', '/api/account', { password: NEWPW });
   assert.equal(r.status, 200);
   assert.equal(db.prepare('SELECT COUNT(*) AS n FROM holdings').get().n, 0, 'kaszkád törlés');
+});
+
+// A nyilvános változásnapló első eleme mindig az aktuális verzió (server/package.json)
+test('changelog.json aktualis verzio', () => {
+  const pkg = require('../package.json');
+  const cl = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'public', 'assets', 'data', 'changelog.json'), 'utf8'));
+  assert.equal(cl.versions[0].version, pkg.version);
+  for (const v of cl.versions) assert.ok(v.version && v.date && Array.isArray(v.items) && v.items.length);
 });

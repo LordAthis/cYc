@@ -1,7 +1,7 @@
-<!-- Verzio: v0.4.2 - 2026-10-20 -->
+<!-- Verzio: v0.4.3 - 2026-11-09 -->
 # cYc – Crypto Calculator
 
-**Aktuális verzió: v0.4.2** (2026-10-20)
+**Aktuális verzió: v0.4.3** (2026-11-09)
 
 Valós idejű kripto- és deviza-árfolyam kalkulátor saját szerverrel, felhasználói fiókokkal,
 eszközök között szinkronizált kedvencekkel/portfólióval/előzményekkel, és egyedileg engedélyezhető
@@ -13,6 +13,7 @@ Verziózás: 1.0 előtt vagyunk (az élő oldal még átállás alatt). Javítá
 
 | Verzió | Dátum | Lényeg |
 |---|---|---|
+| v0.4.3 | 2026-11-09 | Verziószám a lábléc bal alsó sarkában (statikus módban is), nyilvános verziótörténet a Rólunk oldal alján (`public/assets/data/changelog.json`). Dependabot: `body-parser` 2.4.0 (a különálló ág beolvasztva a main-be); a package-lock `license` mezője egyezik a package.json-nal. |
 | v0.4.2 | 2026-10-20 | A 404-es oldal ismét az eredeti, teljes minőségű képet (404_001.png) használja; a kép a régi és az új kiszolgálási módban is megjelenik. |
 | v0.4.1 | 2026-10-19 | Kompatibilis mód az élő szerverhez: a weboldal Node nélkül, statikusan is működik (a kalkulátor a böngészőből kéri az árfolyamot), a régi címek átirányítanak a `public/` mappába, IP-címes HTTP-üzem (süti, biztonsági fejlécek), biztonságos frissítő (`deploy/update.sh`) és csak olvasó diagnosztika (`deploy/diagnose.sh`), szigorúbb `.gitignore`. |
 | v0.4.0 | 2026-10-19 | (A GitHub commit üzenetében tévesen „v2.0.0” szerepel.) Saját Node.js szerver (VPS). Regisztráció és belépés e-maillel + jelszóval, captchával, Google-lel; kapcsolható 2FA visszaállító kódokkal. Kedvencek, portfólió, előzmények. Rejtett belső felület és admin panel. Sötét mód, új kriptók és devizák, árfolyam-gyorsítótár, működő kapcsolati űrlap, frissített adatvédelmi szabályzat. Kalkulátor-hibák javítva (pl. HUF→USD „0,00”). |
@@ -25,6 +26,7 @@ Verziózás: 1.0 előtt vagyunk (az élő oldal még átállás alatt). Javítá
 |---|---|
 | Árfolyam-kalkulátor (11 kriptó, 5 fiat), csere gomb, másolás, megosztható URL | v0.3 / bővítve v0.4.0 |
 | Statikus kompatibilis mód (Node nélkül is működik, fiókfunkciók rejtve) | v0.4.1 |
+| Verziószám a láblécben, nyilvános verziótörténet a Rólunk oldalon | v0.4.3 |
 | Régi (v0.3) címek átirányítása (`/about.html` → `public/about.html`), ha a webszerver még a repó gyökerét szolgálja ki | v0.4.1 |
 | IP-címes, HTTP-s üzem (domain nélkül) | v0.4.1 |
 | Biztonságos frissítés (`deploy/update.sh`): nem ír felül, nem töröl, mentést készít | v0.4.1 |
@@ -76,7 +78,11 @@ deploy/            diagnose.sh, update.sh, systemd szolgáltatás, nginx minták
 *.html (gyökér)    ÁTMENETI átirányítások a public/-ba (régi v0.3 címek); később törölhetők
 ```
 
-A program verziója egyetlen helyen van: `server/package.json` → `version`. A lábléc és az API innen olvassa.
+A program verziója egyetlen helyen van: `server/package.json` → `version`. Node módban a lábléc és az API innen olvassa.
+
+**Nyilvános verziótörténet:** `public/assets/data/changelog.json` – a Rólunk oldal alja és (statikus módban) a lábléc
+verziószáma ebből jön. Minden kiadáskor új elem a lista ELEJÉRE, **csak publikus változással** (rejtett felület, admin,
+szerverbeállítás nem kerülhet bele). Az `npm test` ellenőrzi, hogy az első elem verziója egyezik a package.json-nal.
 
 ## Élő szerver – kompatibilis átállás (FONTOS)
 
@@ -94,6 +100,14 @@ Frissítés a szerveren **mindig** a `deploy/update.sh` szkripttel (sima `git pu
 
 A másik weboldal mappáját, ha a cYc klónon belül van, csak **helyben** zárd ki (így a neve nem kerül a repóba):
 `echo "/<mappanev>/" >> .git/info/exclude`
+
+## Miért nem látszik a Belépés gomb?
+
+A Belépés/Regisztráció nincs kikapcsolva, hanem **statikus módban** fut az oldal: a böngésző nem kap választ a
+`/api/config` címről (nincs Node szerver, vagy az nginx nem továbbítja oda a kérést), ezért a fiókfunkciók rejtve maradnak.
+A gomb magától megjelenik, amint a **3. lépés (Node mód)** kész: Node.js + `server/.env` + `cyc.service` fut, és az nginx a
+`deploy/nginx-cyc.conf` szerint a Node szerverre továbbít. Ellenőrzés a szerveren: `curl -s http://127.0.0.1:3000/api/config`
+(ha JSON jön, a Node fut; ha a böngészőben mégsincs gomb, az nginx még a statikus konfigot használja).
 
 ## Admin felület elérése
 
